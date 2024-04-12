@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import Character from './components/Character';
+import React from 'react';
+
 
 function App() {
   return (
