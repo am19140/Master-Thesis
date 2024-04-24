@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const swaggerAPIController = require('../controllers/swaggerAPIController');
+import getRooms from '../controllers/swaggerAPIController.js';
 
-router.get('/external-data', swaggerAPIController.fetchApiData);
+router.get('/rooms', getRooms);
 
-module.exports=router;
+export default router;

@@ -1,6 +1,6 @@
 // Imports
-const express = require('express');
-const swaggerAPIRouter = require('./routes/swaggerAPIRouter');
+import express from 'express';
+import swaggerAPIRouter from './routes/swaggerAPIRouter.js';
 
 // Initiliazing
 const app = express();
@@ -12,6 +12,8 @@ app.get('/api/httpclient', )
 app.get('/', (req, res) => {
   res.send('Hello World!',swaggerAPIRouter);
 });
+
+app.use('/api', swaggerAPIRouter);
 
 
 
