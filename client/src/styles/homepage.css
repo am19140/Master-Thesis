@@ -2,7 +2,7 @@
 
 .roomsDisplay{
     overflow-y: scroll;
-    max-height: 100vh;
+    max-height: 60%;
 }
 
 /* .roomButton{
@@ -12,3 +12,9 @@
     margin:1%;
 
 } */
+
+.dropDownMenu{
+    margin-bottom: 3%;
+    border-radius: 15px;
+    padding:1%;
+}

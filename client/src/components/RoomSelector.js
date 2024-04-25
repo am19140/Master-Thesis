@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Grid} from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import '../styles/homepage.css'
 import '../styles/custombutton.css'
@@ -30,7 +30,7 @@ function SpaceSelector() {
     return (
         <div>
         
-            <select value={floor} onChange={e => setFloor(e.target.value)}>
+            <select value={floor} onChange={e => setFloor(e.target.value)} className='dropDownMenu'>
                 <option value="">Select a Floor</option>
                 {Array.from({ length: 7 }, (_, i) => (
                     <option key={i} value={i}>Floor {i}</option>
@@ -38,13 +38,15 @@ function SpaceSelector() {
             </select>
 
         {error && <p>Error: {error}</p>}
-            <ul>
+            <Grid container spacing={2}>  
                 {rooms.map(room => (
-                    <button key={room.id} className='roomButton' >
-                        Room {room.number}
-                    </button>
+                    <Grid item xs={12} xm={3} md={4}  key={room.id}> 
+                        <a href="#" className='btn-flip' data-back={`Select Space ${room.number}`} data-front={`Room ${room.number}`}>
+                           
+                        </a>
+                    </Grid>
                 ))}
-            </ul>
+            </Grid>
         </div>
     );
 }
