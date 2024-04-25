@@ -2,6 +2,7 @@ import {getToken, fetchDatawithToken} from '../services/httpClient.js';
 
 
 const getRooms = async (req, res) => {
+  console.log('getrooms');
   const username = 'mariana';
   const password = '532xr]~MpYg|';
   const roomsUrl = 'http://leffe.science.uva.nl:8042/rooms/';
