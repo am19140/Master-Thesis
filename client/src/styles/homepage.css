@@ -1,0 +1,14 @@
+
+
+.roomsDisplay{
+    overflow-y: scroll;
+    max-height: 100vh;
+}
+
+/* .roomButton{
+    width:100%;
+    cursor: pointer;
+    padding: 2%;
+    margin:1%;
+
+} */

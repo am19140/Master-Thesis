@@ -30,6 +30,7 @@ const fetchDatawithToken = async (url, token) => {
           'Authorization': `Bearer ${token}`
         }
       };
+    
   
       const response = await fetch(url, options);
       if (!response.ok) {

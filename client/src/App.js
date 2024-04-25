@@ -1,19 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
-import Character from './components/Character';
 import React from 'react';
 import Testing from './pages/Testing';
-
+import { AppBar, Typography, Button, Toolbar } from '@mui/material';
 
 function App() {
 
-  
 
   return (
     <>
-      <h3>Characters</h3>
-      <Testing/>
+    <AppBar position="static">
+      <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+              
+          </Typography>
+          <Button color="inherit">Login</Button>
+      </Toolbar>
+    </AppBar>
+    <Testing/>
     </>
+    
+    
   );
 }
 
