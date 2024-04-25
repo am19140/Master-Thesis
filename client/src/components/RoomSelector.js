@@ -28,7 +28,7 @@ function SpaceSelector() {
     }, [floor]);
 
     return (
-        <div>
+        <div className='selectorContainer'>
         
             <select value={floor} onChange={e => setFloor(e.target.value)} className='dropDownMenu'>
                 <option value="">Select a Floor</option>
@@ -40,7 +40,7 @@ function SpaceSelector() {
         {error && <p>Error: {error}</p>}
             <Grid container spacing={2}>  
                 {rooms.map(room => (
-                    <Grid item xs={12} xm={3} md={4}  key={room.id}> 
+                    <Grid item xs={12}   key={room.id}> 
                         <a href="#" className='btn-flip' data-back={`Select Space ${room.number}`} data-front={`Room ${room.number}`}>
                            
                         </a>

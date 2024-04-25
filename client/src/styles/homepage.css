@@ -1,8 +1,8 @@
 
 
-.roomsDisplay{
+.selectorContainer{
     overflow-y: scroll;
-    max-height: 60%;
+    max-height: 60vh;
 }
 
 /* .roomButton{
