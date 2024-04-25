@@ -13,7 +13,6 @@ const getRooms = async (req, res) => {
     const rooms = await fetchDatawithToken(roomsUrl, token);
     
     res.json(rooms);
-    console.log('hi');
   } catch (error) {
     res.status(500).send('Failed to fetch rooms from external API');
   }
