@@ -2,6 +2,8 @@ import { Grid} from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import '../styles/homepage.css'
 import '../styles/custombutton.css'
+import { gsap } from 'gsap';
+
 
 function SpaceSelector() {
 
@@ -9,6 +11,8 @@ function SpaceSelector() {
     const [floor, setFloor] = useState(0);  
     const [rooms, setRooms] = useState([]);
     const [error, setError] = useState(null);
+    const roomsRefs = useRef([]);
+
 
     useEffect(() => {
 
@@ -40,8 +44,8 @@ function SpaceSelector() {
         {error && <p>Error: {error}</p>}
             <Grid container spacing={2}>  
                 {rooms.map(room => (
-                    <Grid item xs={12}   key={room.id}> 
-                        <a href="#" className='btn-flip' data-back={`Select Space ${room.number}`} data-front={`Room ${room.number}`}>
+                    <Grid item xs={3} sm={4} lg={6} key={room.id}> 
+                        <a href="#" className='btn-flip' data-back={`Room ${room.number}`} data-front={`Room ${room.number}`}>
                            
                         </a>
                     </Grid>
