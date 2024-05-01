@@ -1,0 +1,69 @@
+
+
+.dropDownMenu{
+    border: none;
+
+}
+
+.floor-list-container{
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+    .floor-list-container >li{
+        cursor: pointer;
+        padding: 1rem;
+        height:100%;
+    }
+
+    .floor-list{
+        background: #fff;
+        visibility: hidden;  
+        opacity: 0;          
+        min-width: 5rem;
+        position: absolute;
+        margin-top: 1rem;
+        z-index: 1000;
+        transform-origin: top;
+        transition: visibility 0s linear 1s, opacity 1s ease, transform 1s ease; 
+        transform: scaleY(0);
+        border-radius: 15px;
+
+
+
+    
+    }
+
+        .floor-list li{
+                display: block;
+                padding: 0.5em 2em;
+                color: #444;
+                font-size: .9em;
+                text-decoration: none;
+                
+        }
+            
+
+        .trigger:hover .floor-list{
+            visibility: visible;
+            opacity: 1;
+            transform: scaleY(1);
+            transition-delay: 0s;
+        }
+
+        .floor-list .floor-item{
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .floor-list .floor-item:hover{
+            transform: scale(1.2);
+        }
+
+        .floor-list .selector-indication{
+            display: flex;
+            align-items: center;
+        }
+
+           

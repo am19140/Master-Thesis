@@ -5,6 +5,13 @@
     max-height: 60vh;
 }
 
+.rightContainer{
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 3px;
+
+}
+
 /* .roomButton{
     width:100%;
     cursor: pointer;
@@ -18,3 +25,28 @@
     border-radius: 15px;
     padding:1%;
 }
+
+::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }

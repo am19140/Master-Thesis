@@ -11,9 +11,9 @@
   letter-spacing: 1px;
   display: inline-block;
   text-decoration: none;
-  width:90%;
+  width: 100%;  
   border-radius: 15px;
-  margin:0;
+
   
   
   &:hover{
@@ -33,11 +33,11 @@
     top: 0;
     left: 0;
     width: 100%;
-    color: #323237;
+    color: #fff;
     display: block;
     transition: 0.5s;
     position: absolute;
-    background: #adadaf;
+    background: #f65d51;
     content: attr(data-back);
     transform: translateY(-50%) rotateX(90deg);
     border-radius: 15px;
@@ -48,11 +48,11 @@
     top: 0;
     left: 0;
     opacity: 1;
-    color: #adadaf;
+    color: #fff;
     display: block;
     transition: 0.5s;
     position: relative;
-    background: #323237;
+    background: #ffd662;
     content: attr(data-front);
     transform: translateY(0) rotateX(0);
     border-radius: 15px;

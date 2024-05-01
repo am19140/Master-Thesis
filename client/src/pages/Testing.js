@@ -72,10 +72,10 @@ function Testing() {
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
-                    <Paper style={{ padding: 16 }}>
-                        <ShowRoomsSensors rooms={rooms}/>
-                    </Paper>
+                <Grid item xs={12} sm={6}>    
+                    <div className='rightContainer'>
+                        <ShowRoomsSensors rooms={rooms}/>                
+                    </div>                
                 </Grid>
             </Grid>
 
