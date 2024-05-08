@@ -4,7 +4,6 @@ import '../styles/homepage.css'
 import '../styles/custombutton.css'
 import '../styles/roomselector.css'
 import { gsap } from 'gsap';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 function SpaceSelector() {
@@ -51,7 +50,7 @@ function SpaceSelector() {
         <div className='selectorContainer'>
         <ul className='floor-list-container'>
             <li className='trigger' onMouseEnter={() => setisVisible(true)}>
-                <div className='selector-indication'>Select floor <ArrowDropDownIcon/></div>
+                <div className='selector-indication'>Select floor </div>
 
             <ul className="floor-list" style={{visibility:isVisible ? 'visible' : 'hidden'}}>
             {Array.from({ length: 7 }, (_, i) => (

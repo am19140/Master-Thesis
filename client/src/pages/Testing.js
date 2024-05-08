@@ -3,6 +3,7 @@ import Character from '../components/Character';
 import { Grid, Paper } from '@mui/material';
 import '../styles/homepage.css'
 import RoomSelector from '../components/RoomSelector';
+import FloorPlan from '../components/FloorPlan';
 
 function Testing() {
     const [rooms, setRooms] = useState([]);
@@ -67,9 +68,7 @@ function Testing() {
             <>
             <Grid container spacing={3} style={{ padding: 24 }}>
                 <Grid item xs={12} sm={6}>
-                    <Paper style={{ padding: 16 }}>
-                        
-                    </Paper>
+                    <FloorPlan/>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>    
