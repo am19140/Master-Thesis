@@ -57,6 +57,13 @@ function Testing() {
         setCurrentIndex((previousIndex)=>(previousIndex-1) % cardContent.length);
     }
 
+    const handleRoomClick = (event) => {
+        console.log(`Clicked on: ${event.target.id}`);
+        if(event.target.id!=''){
+            setCurrentIndex(1);
+        }
+        
+    };
 
     
 
@@ -68,7 +75,7 @@ function Testing() {
             <>
             <Grid container spacing={3} style={{ padding: 24 }}>
                 <Grid item xs={12} sm={6}>
-                    <FloorPlan/>
+                    <FloorPlan onRoomClick={handleRoomClick}/>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>    
@@ -82,12 +89,9 @@ function Testing() {
             <div className="card">
                 <h2>{cardContent[currentIndex].content}</h2>
             </div>
-            {currentIndex > 0 && (
-                <button onClick={previousCard}>Back</button>
-            )}
-            {currentIndex < cardContent.length - 1 && (
-                <button onClick={nextCard}>Next</button>
-            )}
+            <button onClick={previousCard} disabled={currentIndex <= 0}>Back</button>
+            <button onClick={nextCard} disabled={currentIndex >= cardContent.length - 1}>Next</button>
+        
 
             </>
         </>

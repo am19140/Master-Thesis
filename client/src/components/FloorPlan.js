@@ -3,20 +3,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ReactComponent as FloorPlan0 } from '../floors/floor0.svg';
 
 
-function Visualisation(){
+function FloorPlan({onRoomClick}){
  
-    const handleRoomClick = (e) => {
+    // const handleRoomClick = (e) => {
 
-        console.log(`Clicked on: ${e.target.id}`); 
-        e.target.style.fill = 'red'; 
-      };
+    //     console.log(`Clicked on: ${e.target.id}`); 
+    //     e.target.style.fill = 'red'; 
+    //   };
     
       return (
         <div>
-          <FloorPlan0 onClick={handleRoomClick} />
+          <FloorPlan0 onClick={onRoomClick} style={{ width: '100%', height: 'auto' }}/>
         </div>
       );
 }
 
 
-export default Visualisation;
+export default FloorPlan;

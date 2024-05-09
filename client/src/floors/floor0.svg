@@ -7,8 +7,8 @@
 <rect id="0-08" x="658.02" y="230.33" width="42.156" height="69.175" fill="#fbfcf0" stroke="#0d0808"/>
 <g fill="#fbfdf0" stroke="#0d0808">
 <rect id="0-01" x="382.79" y="590.28" width="317.68" height="132.37"/>
-<rect x="1016.2" y="194.72" width="109.95" height="104.76" stroke-width="1.0091"/>
-<rect x="964.05" y="83.601" width="161.92" height="112.6"/>
+<rect id="0-12" x="1016.2" y="194.72" width="109.95" height="104.76" stroke-width="1.0091"/>
+<rect id="0-11" x="964.05" y="83.601" width="161.92" height="112.6"/>
 <rect x="807.4" y="83.738" width="156.75" height="112.29"/>
 <rect x="649.16" y="83.738" width="158.1" height="112.29"/>
 <path d="m274.78 512.97v54.037h0.0488v155.76h107.99v-157.21h-60.709v-52.596z" stroke-width="1.1363"/></g>
