@@ -1,6 +1,8 @@
 import { Grid} from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 import { ReactComponent as FloorPlan0 } from '../floors/floor0.svg';
+import '../styles/svg.css'
+
 
 
 function FloorPlan({onRoomClick}){
