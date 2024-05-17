@@ -4,16 +4,16 @@ import '../styles/homepage.css'
 import '../styles/custombutton.css'
 import '../styles/roomselector.css'
 import { gsap } from 'gsap';
+import { DownOutlined } from '@ant-design/icons';
 
 
-function SpaceSelector() {
+function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick }) {
 
-    // Selected floor and room storing
+    
     const [floor, setFloor] = useState(0);  
-    const [rooms, setRooms] = useState([]);
     const [error, setError] = useState(null);
+    const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
-
     const roomsRefs = useRef([]);
 
 
@@ -48,46 +48,56 @@ function SpaceSelector() {
 
     return (
         <div className='selectorContainer'>
-        <ul className='floor-list-container'>
-            <li className='trigger' onMouseEnter={() => setisVisible(true)}>
-                <div className='selector-indication'>Select floor </div>
-
-            <ul className="floor-list" style={{visibility:isVisible ? 'visible' : 'hidden'}}>
-            {Array.from({ length: 7 }, (_, i) => (
-                        <li key={i} 
-                            className='floor-item' 
-                            onClick={() => 
-                            handleFloorMenu(i)}>
-                            Floor {i}
-                        </li>
-                    ))}
-            </ul>
-            </li>
-            <li>
-            {floor === 0 ? 'Ground Floor' : `${floor}${floor === 1 ? 'st' : (floor === 2 ? 'nd' : (floor === 3 ? 'rd' : 'th' ))} Floor`}
-            </li>
-        </ul>
+  
 
 
 
         {error && <p>{error}</p>}
-            <Grid container spacing={1}>  
-               
-                {rooms.map((room, index) => (
-
-                    <Grid item xs={3} sm={4} lg={4} key={room.id}> 
-                        <div className='buttonContainer'>
-                            <a href="" ref={el => roomsRefs.current[index] = el} className='btn-flip' data-back={`${room.number}`} 
-                                data-front={`${room.number}`} 
-                                key={room.id} >
-                                
-                            </a>
-                        </div>
-                        
+            {selectedRoomId ? (
+                    <div>
+                        <button onClick={resetSelectedRoom}>Back to Room Selection</button>
+                        <h2>Selected Room: {selectedRoomId}</h2>
+                    </div>
+                ) : (
+                    <>
+                        <ul className='floor-list-container'>
+                        <li className='trigger' onMouseEnter={() => setisVisible(true)}>
+                            <div className='selector-indication'>Select floor <DownOutlined /> </div>
+            
+                        <ul className="floor-list" style={{visibility:isVisible ? 'visible' : 'hidden'}}>
+                        {Array.from({ length: 7 }, (_, i) => (
+                                    <li key={i} 
+                                        className='floor-item' 
+                                        onClick={() => 
+                                        handleFloorMenu(i)}>
+                                        Floor {i}
+                                    </li>
+                                ))}
+                        </ul>
+                        </li>
+                        <li>
+                        {floor === 0 ? 'Ground Floor' : `${floor}${floor === 1 ? 'st' : (floor === 2 ? 'nd' : (floor === 3 ? 'rd' : 'th' ))} Floor`}
+                        </li>
+                    </ul>
+                    <Grid container spacing={1}>
+                        {rooms.map((room, index) => (
+                            <Grid item xs={3} sm={4} lg={4} key={room.id}>
+                                <div className='buttonContainer'>
+                                    <a href="#" ref={el => roomsRefs.current[index] = el} 
+                                    className='btn-flip' 
+                                    data-back={`${room.number}`} 
+                                    data-front={`${room.number}`} 
+                                    key={room.id}
+                                    onClick={(e)=>  
+                                            {e.preventDefault();    
+                                            handleRoomClick(room.number)}
+                                        }></a>
+                                </div>
+                            </Grid>
+                        ))}
                     </Grid>
-
-                ))}
-            </Grid>
+                    </>
+                )}
         </div>
     );
 }

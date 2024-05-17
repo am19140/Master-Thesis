@@ -1,15 +1,23 @@
 
-
+.homepage{
+  background-color: #6A6AD2;
+  height: 105vh;
+}
 .selectorContainer{
     overflow-y: scroll;
     max-height: 60vh;
 }
 
 .rightContainer{
-    border-style: solid;
+    
     border-radius: 25px;
-    border-width: 3px;
+    
+    background-color: white;
 
+}
+
+.gridBig{
+  height: 100%;
 }
 
 /* .roomButton{

@@ -5,7 +5,7 @@ svg rect[id] {
 }
 
 svg rect[id]:hover{
-    fill:greenyellow;
+    fill:#89C5CC;
     cursor: pointer;
     
 }

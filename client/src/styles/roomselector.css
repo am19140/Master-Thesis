@@ -5,6 +5,10 @@
 
 }
 
+.rightContainer{
+    height: 100%;
+}
+
 .floor-list-container{
     display: flex;
     list-style: none;
@@ -16,6 +20,11 @@
         cursor: pointer;
         padding: 1rem;
         height:100%;
+    }
+
+    .selectorContainer{
+        padding: 1rem;
+
     }
 
     .floor-list{

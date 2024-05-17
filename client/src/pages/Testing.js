@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Character from '../components/Character';
 import { Grid, Paper } from '@mui/material';
 import '../styles/homepage.css'
-import RoomSelector from '../components/RoomSelector';
 import FloorPlan from '../components/FloorPlan';
+import SpaceSelector from '../components/RoomSelector';
 
 function Testing() {
     const [rooms, setRooms] = useState([]);
     const [error, setError] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [selectedRoomId, setSelectedRoomId] = useState(null);
 
 
     const fetchRooms = async () => {
@@ -32,13 +33,29 @@ function Testing() {
         fetchRooms();
     },[]);
 
-    function ShowRoomsSensors(props){
-        console.log(props.rooms);
-        const rooms = props.rooms;
-        return (
-            <RoomSelector/>
-        );
-    }
+    const handleRoomClick = (roomId) => {
+        
+        console.log(roomId);
+
+        if (typeof roomId !== 'string') {
+            console.error('Invalid roomId:', roomId);
+            return;
+        }
+
+        let roomid = roomId;
+        if(typeof roomid === 'string' || roomid instanceof String){
+            if(roomid.includes("-")){
+                roomid = roomId.split("-")[1];
+            }
+        }
+        console.log(`Clicked on: ${roomid}`);
+        if (roomid) {
+            setSelectedRoomId(roomid);
+            setCurrentIndex(1);
+        }
+    };
+
+    
 
     const cardContent = [
         {id:1, content: <Character 
@@ -49,49 +66,39 @@ function Testing() {
         />}
     ];
 
-    function nextCard() {
-        setCurrentIndex((previousIndex)=>(previousIndex+1) % cardContent.length);
-    }
-
-    function previousCard() {
-        setCurrentIndex((previousIndex)=>(previousIndex-1) % cardContent.length);
-    }
-
-    const handleRoomClick = (event) => {
-        console.log(`Clicked on: ${event.target.id}`);
-        if(event.target.id!=''){
-            setCurrentIndex(1);
-        }
-        
+    const resetSelectedRoom = () => {
+        setSelectedRoomId(null);
     };
+
+  
+
+    
 
     
 
     return (
-      <div className="Homepage">
-        <h1>Testing page</h1>
+      <div className="homepage">
 
         <>            
             <>
-            <Grid container spacing={3} style={{ padding: 24 }}>
+            <Grid container spacing={3} style={{ padding: 24}} className='gridBig'>
                 <Grid item xs={12} sm={6}>
-                    <FloorPlan onRoomClick={handleRoomClick}/>
+                    <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.id)} />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>    
                     <div className='rightContainer'>
-                        <ShowRoomsSensors rooms={rooms}/>                
+                        <SpaceSelector 
+                            selectedRoomId={selectedRoomId} 
+                            resetSelectedRoom={resetSelectedRoom} 
+                            handleRoomClick={handleRoomClick}/>                
                     </div>                
                 </Grid>
             </Grid>
 
 
-            <div className="card">
-                <h2>{cardContent[currentIndex].content}</h2>
-            </div>
-            <button onClick={previousCard} disabled={currentIndex <= 0}>Back</button>
-            <button onClick={nextCard} disabled={currentIndex >= cardContent.length - 1}>Next</button>
-        
+            
+          
 
             </>
         </>

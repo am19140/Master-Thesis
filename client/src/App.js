@@ -9,14 +9,14 @@ function App() {
 
   return (
     <>
-    <AppBar position="static">
+    {/* <AppBar position="static">
       <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
               
           </Typography>
           <Button color="inherit">Login</Button>
       </Toolbar>
-    </AppBar>
+    </AppBar> */}
     <Testing/>
     </>
     
