@@ -5,6 +5,7 @@ import '../styles/custombutton.css'
 import '../styles/roomselector.css'
 import { gsap } from 'gsap';
 import { DownOutlined } from '@ant-design/icons';
+import backArrow from '../images/back-arrow.png';
 
 
 function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick }) {
@@ -15,7 +16,8 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick }) {
     const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
     const roomsRefs = useRef([]);
-
+    const contentRef1 = useRef(null);
+    const contentRef2 = useRef(null);
 
     useEffect(() => {
 
@@ -41,6 +43,18 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick }) {
         }
     }, [rooms]);
 
+    useEffect(()=>{
+        if(selectedRoomId){
+            gsap.to(contentRef1.current, {x:0, opacity:1 ,duration:1});
+            gsap.to(contentRef2.current,{x:100, opacity:0 ,duration:1});
+        }
+        else{
+            gsap.to(contentRef1.current, {x:-200,opacity:0, duration:1});
+            gsap.to(contentRef2.current, {x:0,opacity:1, duration:1});
+
+        }
+    },[selectedRoomId,contentRef1,contentRef2]);
+
     const handleFloorMenu = (i) => {
         setFloor(i);
         setisVisible(false);
@@ -49,55 +63,56 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick }) {
     return (
         <div className='selectorContainer'>
   
-
-
-
         {error && <p>{error}</p>}
-            {selectedRoomId ? (
-                    <div>
-                        <button onClick={resetSelectedRoom}>Back to Room Selection</button>
-                        <h2>Selected Room: {selectedRoomId}</h2>
-                    </div>
-                ) : (
-                    <>
-                        <ul className='floor-list-container'>
-                        <li className='trigger' onMouseEnter={() => setisVisible(true)}>
-                            <div className='selector-indication'>Select floor <DownOutlined /> </div>
+
+
+        
+                <div ref={contentRef1} style={{position: 'absolute'}} className='contentRef1'>
+                    <a onClick={resetSelectedRoom}>                            
+                        <img src={backArrow} alt="Back" />
+                    </a>
+                    <h2>Selected Room: {selectedRoomId}</h2>
+                </div>
             
-                        <ul className="floor-list" style={{visibility:isVisible ? 'visible' : 'hidden'}}>
-                        {Array.from({ length: 7 }, (_, i) => (
-                                    <li key={i} 
-                                        className='floor-item' 
-                                        onClick={() => 
-                                        handleFloorMenu(i)}>
-                                        Floor {i}
-                                    </li>
-                                ))}
-                        </ul>
-                        </li>
-                        <li>
-                        {floor === 0 ? 'Ground Floor' : `${floor}${floor === 1 ? 'st' : (floor === 2 ? 'nd' : (floor === 3 ? 'rd' : 'th' ))} Floor`}
-                        </li>
+                <div ref={contentRef2} style={{position: 'absolute'}}>
+                    <ul className='floor-list-container'>
+                    <li className='trigger' onMouseEnter={() => setisVisible(true)}>
+                        <div className='selector-indication'>Select floor <DownOutlined /> </div>
+        
+                    <ul className="floor-list" style={{visibility:isVisible ? 'visible' : 'hidden'}}>
+                    {Array.from({ length: 7 }, (_, i) => (
+                                <li key={i} 
+                                    className='floor-item' 
+                                    onClick={() => 
+                                    handleFloorMenu(i)}>
+                                    Floor {i}
+                                </li>
+                            ))}
                     </ul>
-                    <Grid container spacing={1}>
-                        {rooms.map((room, index) => (
-                            <Grid item xs={3} sm={4} lg={4} key={room.id}>
-                                <div className='buttonContainer'>
-                                    <a href="#" ref={el => roomsRefs.current[index] = el} 
-                                    className='btn-flip' 
-                                    data-back={`${room.number}`} 
-                                    data-front={`${room.number}`} 
-                                    key={room.id}
-                                    onClick={(e)=>  
-                                            {e.preventDefault();    
-                                            handleRoomClick(room.number)}
-                                        }></a>
-                                </div>
-                            </Grid>
-                        ))}
-                    </Grid>
-                    </>
-                )}
+                    </li>
+                    <li>
+                    {floor === 0 ? 'Ground Floor' : `${floor}${floor === 1 ? 'st' : (floor === 2 ? 'nd' : (floor === 3 ? 'rd' : 'th' ))} Floor`}
+                    </li>
+                </ul>
+                <Grid container spacing={1}>
+                    {rooms.map((room, index) => (
+                        <Grid item xs={3} sm={4} lg={4} key={room.id}>
+                            <div className='buttonContainer'>
+                                <a href="#" ref={el => roomsRefs.current[index] = el} 
+                                className='btn-flip' 
+                                data-back={`${room.number}`} 
+                                data-front={`${room.number}`} 
+                                key={room.id}
+                                onClick={(e)=>  
+                                        {e.preventDefault();    
+                                        handleRoomClick(room.number)}
+                                    }></a>
+                            </div>
+                        </Grid>
+                    ))}
+                </Grid>
+                </div>
+            
         </div>
     );
 }

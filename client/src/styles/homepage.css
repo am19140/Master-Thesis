@@ -1,6 +1,6 @@
 
 .homepage{
-  background-color: #6A6AD2;
+  background-color: #fff;
   height: 105vh;
 }
 .selectorContainer{
@@ -9,11 +9,15 @@
 }
 
 .rightContainer{
-    
-    border-radius: 25px;
+  
     
     background-color: white;
+  
+}
 
+.right-side{
+  padding: 0px !important;
+  color: #fff;
 }
 
 .gridBig{

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Character from '../components/Character';
 import { Grid, Paper } from '@mui/material';
 import '../styles/homepage.css'
@@ -10,6 +10,7 @@ function Testing() {
     const [error, setError] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedRoomId, setSelectedRoomId] = useState(null);
+    
 
 
     const fetchRooms = async () => {
@@ -29,7 +30,6 @@ function Testing() {
     };
 
     useEffect( () => {     
-
         fetchRooms();
     },[]);
 
@@ -57,15 +57,7 @@ function Testing() {
 
     
 
-    const cardContent = [
-        {id:1, content: <Character 
-            name='Content'
-        /> },
-        {id:2 , content: <Character 
-            name='Content 2'
-        />}
-    ];
-
+  
     const resetSelectedRoom = () => {
         setSelectedRoomId(null);
     };
@@ -81,17 +73,18 @@ function Testing() {
 
         <>            
             <>
-            <Grid container spacing={3} style={{ padding: 24}} className='gridBig'>
-                <Grid item xs={12} sm={6}>
+            <Grid container spacing={3}  className='gridBig'>
+                <Grid item xs={12} sm={8}>
                     <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.id)} />
                 </Grid>
 
-                <Grid item xs={12} sm={6}>    
+                <Grid item xs={12} sm={4} className='right-side'>    
                     <div className='rightContainer'>
                         <SpaceSelector 
                             selectedRoomId={selectedRoomId} 
                             resetSelectedRoom={resetSelectedRoom} 
-                            handleRoomClick={handleRoomClick}/>                
+                            handleRoomClick={handleRoomClick}
+                            />                
                     </div>                
                 </Grid>
             </Grid>

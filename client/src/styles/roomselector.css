@@ -7,6 +7,8 @@
 
 .rightContainer{
     height: 100%;
+    background-color: #6A6AD2;
+    padding:1rem;
 }
 
 .floor-list-container{
@@ -27,6 +29,11 @@
 
     }
 
+    .contentRef1 img{
+        width:10%;
+        cursor: pointer;
+    }
+
     .floor-list{
         background: #fff;
         visibility: hidden;  
@@ -38,7 +45,7 @@
         transform-origin: top;
         transition: visibility 0s linear 1s, opacity 1s ease, transform 1s ease; 
         transform: scaleY(0);
-        border-radius: 15px;
+        border-radius: 5px;
 
 
 
