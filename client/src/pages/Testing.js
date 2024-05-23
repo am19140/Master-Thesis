@@ -13,25 +13,25 @@ function Testing() {
     
 
 
-    const fetchRooms = async () => {
-        try{
-            const response = await fetch('api/rooms');
-            if(!response.ok) {                
-                throw new Error('Failed to fetch because of' + response.statusText);                   
-            }
-            const data = await response.json();
-            console.log(data); 
-            setRooms(data);
-        }
-        catch(error) {
-            setError(error.message);
-            console.log(error);
-        }
-    };
+    // const fetchRooms = async () => {
+    //     try{
+    //         const response = await fetch('api/rooms');
+    //         if(!response.ok) {                
+    //             throw new Error('Failed to fetch because of' + response.statusText);                   
+    //         }
+    //         const data = await response.json();
+    //         console.log(data); 
+    //         setRooms(data);
+    //     }
+    //     catch(error) {
+    //         setError(error.message);
+    //         console.log(error);
+    //     }
+    // };
 
-    useEffect( () => {     
-        fetchRooms();
-    },[]);
+    // useEffect( () => {     
+    //     fetchRooms();
+    // },[]);
 
     const handleRoomClick = (roomId) => {
         
