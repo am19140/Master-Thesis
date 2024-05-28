@@ -1,24 +1,24 @@
 import {getToken, fetchDatawithToken} from '../services/httpClient.js';
 
 
-// const getRooms = async (req, res) => {
+const getRooms = async (req, res) => {
   
-//   const username = 'mariana';
-//   const password = '532xr]~MpYg|';
-//   const roomsUrl = 'http://leffe.science.uva.nl:8042/rooms/';
-//   const url = 'http://leffe.science.uva.nl:8042/auth/login';
+  const username = 'mariana';
+  const password = '532xr]~MpYg|';
+  const roomsUrl = 'http://leffe.science.uva.nl:8042/rooms/';
+  const url = 'http://leffe.science.uva.nl:8042/auth/login';
   
   
-//   try {
-//     const token = await getToken(url, username, password);
-//     const rooms = await fetchDatawithToken(roomsUrl, token);
+  try {
+    const token = await getToken(url, username, password);
+    const rooms = await fetchDatawithToken(roomsUrl, token);
     
-//     res.json(rooms);
-//   } catch (error) {
-//     res.status(500).send('Failed to fetch rooms from external API');
-//   }
+    res.json(rooms);
+  } catch (error) {
+    res.status(500).send('Failed to fetch rooms from external API');
+  }
 
 
-// };
+};
 
-// export default getRooms;
+export default getRooms;

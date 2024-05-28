@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg width="1e3" height="800" version="1.1" viewBox="0 0 1e3 800" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g>
-<g transform="translate(42.379 -9.6867)" fill="#aad5d5"><path id="0-04" d="m172.96 293.33v61.535h51.529v44.029h-23.863v46.002h53.156v-43.986h0.0156v-46.045h0.0547v-61.535z" stroke="#000" stroke-width=".99808"/>
-<rect id="0-08" x="421.18" y="221.9" width="42.156" height="69.175" stroke="#0d0808"/><g>
-<rect id="0-01" x="145.94" y="581.85" width="317.68" height="132.37"/>
-<rect id="0-12" x="775.01" y="186.29" width="114.27" height="104.76" stroke-width="1.0287"/>
-<rect id="0-11" x="727.21" y="75.17" width="161.92" height="112.6"/>
-<rect id="0-10" x="570.56" y="75.307" width="156.75" height="112.29"/>
-<rect id="0-09" x="412.32" y="75.307" width="158.1" height="112.29"/><path id="0-03" d="m37.941 504.54v54.037h0.0488v155.76h107.99v-157.21h-60.709v-52.596z" stroke-width="1.1363"/>
-<rect id="0-02A" x="363.99" y="394.25" width="65.895" height="146.36"/></g><g display="none"><g fill="#aad5d5"><rect x="363.02" y="396.53" width="64.436" height="146.68"/>
+<g transform="translate(42.379 -9.6867)" fill="#aad5d5">
+<path id="28" data-no="0-04" d="m172.96 293.33v61.535h51.529v44.029h-23.863v46.002h53.156v-43.986h0.0156v-46.045h0.0547v-61.535z" stroke="#000" stroke-width=".99808"/>
+<rect id="4" data-no="0-08" x="421.18" y="221.9" width="42.156" height="69.175" stroke="#0d0808"/><g>
+<rect id="20" data-no="0-01" x="145.94" y="581.85" width="317.68" height="132.37"/>
+<rect id="9" data-no="0-12" x="775.01" y="186.29" width="114.27" height="104.76" stroke-width="1.0287"/>
+<rect id="8" data-no="0-11" x="727.21" y="75.17" width="161.92" height="112.6"/>
+<rect id="7" data-no="0-10" x="570.56" y="75.307" width="156.75" height="112.29"/>
+<rect id="6" data-no="0-09" x="412.32" y="75.307" width="158.1" height="112.29"/>
+<path id="21" data-no="0-03" d="m37.941 504.54v54.037h0.0488v155.76h107.99v-157.21h-60.709v-52.596z" stroke-width="1.1363"/>
+<rect id="27" data-no="0-02A" x="363.99" y="394.25" width="65.895" height="146.36"/></g><g display="none"><g fill="#aad5d5"><rect x="363.02" y="396.53" width="64.436" height="146.68"/>
 <rect x="37.943" y="181.53" width="109.75" height="111.65"/><rect x="247.69" y="75.305" width="137.39" height="110.02"/>
 <rect x="357.91" y="497.65" width="11.518" height="46.46"/></g><image x="209.65" y="452.41" width="11.15" height="11.732" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD
 DUlEQVR4nO2bMWsUURSFPwVjoaABBTFOY7OdIIgpxEIb/4OlEItoLNIIBq0FBRsLG0UriSystkJA

@@ -27,14 +27,17 @@ const fetchDatawithToken = async (url, token) => {
       const options = {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
       };
     
   
       const response = await fetch(url, options);
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        const errorBody = await response.json(); 
+        throw new Error(`HTTP error! Status: ${response.status}, Body: ${errorBody}`);
       }
       return await response.json();
     } catch (error) {

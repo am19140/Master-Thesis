@@ -13,51 +13,14 @@
   text-decoration: none;
   width: 100%;  
   border-radius: 15px;
+  background-color: #AAD5D5;
+  margin: 3%;
+  
+}
 
-  
-  
-  &:hover{
-    
-    &:after{
-      opacity: 1;
-      transform: translateY(0) rotateX(0);
-    }
-    
-    &:before{
-      opacity: 0;
-      transform: translateY(50%) rotateX(90deg);
-    }
-  }
-  
-  &:after{
-    top: 0;
-    left: 0;
-    width: 100%;
-    color: #fff;
-    display: block;
-    transition: 0.5s;
-    position: absolute;
-    background: #EEE8D6;
-    content: attr(data-back);
-    transform: translateY(-50%) rotateX(90deg);
-    border-radius: 15px;
 
-  }
-  
-  &:before{
-    top: 0;
-    left: 0;
-    opacity: 1;
-    color: #fff;
-    display: block;
-    transition: 0.5s;
-    position: relative;
-    background: #0A2B5B;
-    content: attr(data-front);
-    transform: translateY(0) rotateX(0);
-    border-radius: 15px;
-
-  }
+.btn-flip:hover{
+  background-color: transparent;
 }
 
 /* Author: Alex Moore

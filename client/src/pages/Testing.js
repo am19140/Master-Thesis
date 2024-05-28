@@ -8,74 +8,70 @@ import SpaceSelector from '../components/RoomSelector';
 function Testing() {
     const [rooms, setRooms] = useState([]);
     const [error, setError] = useState(null);
+    const [temperature, setTemperature] = useState(false);
+    const [loading, setLoading] = useState([]);
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedRoomId, setSelectedRoomId] = useState(null);
     
+   
 
 
-    // const fetchRooms = async () => {
-    //     try{
-    //         const response = await fetch('api/rooms');
-    //         if(!response.ok) {                
-    //             throw new Error('Failed to fetch because of' + response.statusText);                   
-    //         }
-    //         const data = await response.json();
-    //         console.log(data); 
-    //         setRooms(data);
-    //     }
-    //     catch(error) {
-    //         setError(error.message);
-    //         console.log(error);
-    //     }
-    // };
-
-    // useEffect( () => {     
-    //     fetchRooms();
-    // },[]);
-
-    const handleRoomClick = (roomId) => {
+    const handleRoomClick =  async (roomNumber, roomId) => {
         
-        console.log(roomId);
+        console.log(`Clicked on room with id: ${roomId}`);
+        console.log(`Clicked on room with no: ${roomNumber}`);
 
-        if (typeof roomId !== 'string') {
-            console.error('Invalid roomId:', roomId);
+        if (typeof roomNumber !== 'string') {
+            console.error('Invalid roomNumber:', roomNumber);
             return;
         }
 
-        let roomid = roomId;
-        if(typeof roomid === 'string' || roomid instanceof String){
-            if(roomid.includes("-")){
-                roomid = roomId.split("-")[1];
+        let room_number = roomNumber;
+        if(typeof room_number === 'string' || room_number instanceof String){
+            if(room_number.includes("-")){
+                room_number = roomNumber.split("-")[1];
             }
         }
-        console.log(`Clicked on: ${roomid}`);
-        if (roomid) {
-            setSelectedRoomId(roomid);
-            setCurrentIndex(1);
+        console.log(`Clicked on: ${room_number}`);
+
+        if (room_number) {
+            setLoading(true);
+            fetch(`/api/room_temp/${roomId}`)
+                .then((response) => {
+                    if (!response.ok) throw new Error('Failed to fetch temperature data');
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setTemperature(data);
+                })
+                .catch((err) => {
+                    console.error('Error fetching temperature data:', err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                    setSelectedRoomId(room_number);
+                });
         }
     };
 
     
 
+    
   
     const resetSelectedRoom = () => {
         setSelectedRoomId(null);
     };
 
-  
-
-    
-
-    
-
     return (
       <div className="homepage">
 
-        <>            
+                
             <>
             <Grid container spacing={3}  className='gridBig'>
                 <Grid item xs={12} sm={8}>
-                    <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.id)} />
+                    <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} />
                 </Grid>
 
                 <Grid item xs={12} sm={4} className='right-side'>    
@@ -84,6 +80,8 @@ function Testing() {
                             selectedRoomId={selectedRoomId} 
                             resetSelectedRoom={resetSelectedRoom} 
                             handleRoomClick={handleRoomClick}
+                            temperature={temperature}
+                            loading={loading}
                             />                
                     </div>                
                 </Grid>
@@ -94,7 +92,7 @@ function Testing() {
           
 
             </>
-        </>
+   
       </div>
     );
   }
