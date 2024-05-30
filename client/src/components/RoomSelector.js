@@ -4,10 +4,13 @@ import '../styles/homepage.css'
 import '../styles/custombutton.css'
 import '../styles/roomselector.css'
 import { gsap } from 'gsap';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, CloseCircleOutlined, LikeOutlined,DislikeOutlined} from '@ant-design/icons';
 import backArrow from '../images/back-arrow.png';
 import { Spin } from 'antd';
-import FallbackData from '../data/MOCK_DATA.json' ;
+import {ReactComponent as Snowman} from '../images/snowman.svg'
+import '../styles/snowman.css'
+
+import CustomSlider from './CustomSlider';
 
 
 function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading }) {
@@ -17,13 +20,20 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
+    const [isSnowmanVisible, setisSnowmanVisible] = useState(false);
     const roomsRefs = useRef([]);
     const contentRef1 = useRef(null);
     const contentRef2 = useRef(null);
-    const load = useRef(null);
+    const svgRef = useRef(null);
+    const [opacityRef1, setOpacityRef1] = useState(1);
+    const [opacityRef2, setOpacityRef2] = useState(0);
+    const load = useRef(null);   
 
+    
 
-  
+    const zIndexRef1 = opacityRef1 === 1 ? 10 : 5;
+    const zIndexRef2 = opacityRef2 === 1 ? 10 : 5;
+    
     useEffect(() => {
 
         const fetchRooms = async () => {
@@ -69,11 +79,23 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     }, [rooms]);
 
     useEffect(() => {
+        if (svgRef.current) {
+            console.log('svg exists');
+            gsap.set(svgRef.current, { opacity: 0 });
+        }
+    }, []);
+
+    useEffect(() => {
         if (!loading) {
+            
             if (selectedRoomId) {
+                setOpacityRef1(1);
+                setOpacityRef2(0); 
                 gsap.to(contentRef1.current, { x: 0, opacity: 1, duration: 1 });
-                gsap.to(contentRef2.current, { x: 100, opacity: 0, duration: 1 });
+                gsap.to(contentRef2.current, { x: 0, opacity: 0, duration: 1 });
             } else {
+                setOpacityRef1(0.5);
+                setOpacityRef2(1); 
                 gsap.to(contentRef1.current, { x: -200, opacity: 0, duration: 1 });
                 gsap.to(contentRef2.current, { x: 0, opacity: 1, duration: 1 });
             }
@@ -85,28 +107,69 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     useEffect(()=>{
         if(loading){
             gsap.to(load.current, {x:0, opacity:1 ,duration:1});
-            gsap.to(contentRef1.current, { x: 100, opacity: 0, duration: 1 });
-            gsap.to(contentRef2.current, { x: 100, opacity: 0, duration: 1 });
+            gsap.to(contentRef1.current, { x: 300, opacity: 0, duration: 1 });
+            gsap.to(contentRef2.current, { x: 300, opacity: 0, duration: 1 });
         }
         
     })
+
+  
+
+    useEffect(() => {
+        if (isSnowmanVisible && svgRef.current) {
+            gsap.set(svgRef.current, { opacity: 0 });
+            gsap.to(svgRef.current, { opacity: 1, duration: 1 });
+        } else if (svgRef.current && !isSnowmanVisible) {
+            
+            gsap.to(svgRef.current, { opacity: 0, duration: 1 });
+        }
+    }, [isSnowmanVisible]);
+
+    
 
     const handleFloorMenu = (i) => {
         setFloor(i);
         setisVisible(false);
     }
 
- 
+    const handleSubmitClick = (event) => {
+        event.stopPropagation();
+        setisSnowmanVisible(true);       
+        
+    };
+
+    const handleCloseAvatar = (event) => {
+        event.stopPropagation();
+        setisSnowmanVisible(false);       
+        
+    };
+   
+
+      function valuetext(value) {
+        return `${value}°C`;
+      }
+
+    
 
     return (
         <div className='selectorContainer'>
   
         {error && <p>{error}</p>}
+        {isSnowmanVisible && 
 
-        {loading && <p ref={load} className='spinner'> <Spin size='large'/> </p>  }
+            <div className='svgContainer'>
+                
+                <div onClick={handleCloseAvatar} className='back-arrow' >                            
+                    <CloseCircleOutlined className='circleClose'/>
+                </div>
+                <Snowman  ref={svgRef}  className='svgFloating'/>
+            </div>
+        }
         
-        <div ref={contentRef1} style={{position: 'absolute'}} className='contentRef1'>
-            <a onClick={resetSelectedRoom} className='back-arrow'>                            
+        {loading && <div ref={load} className='spinner'> <Spin size='large'/> </div>  }
+        
+        <div ref={contentRef1} style={{position: 'absolute',zIndex: zIndexRef1, opacity: opacityRef1 }} className='contentRef1'>
+            <a onClick={resetSelectedRoom} className='back-arrow'href="">                            
                 <img src={backArrow} alt="Back" />
             </a>
             <div className='title'>Room {selectedRoomId}'s Conditions</div>
@@ -116,14 +179,35 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                    <p>Most students perceive this room as cold</p>
                 </div>
                 <div className='badge'>
-                    <img src={backArrow}></img>
+                    <Snowman/>
                 </div>
+            </div>
+
+            <div className='feedback-component'>
+                <h3>Do you have any complaints about your room?</h3>
+                
+                {/* <div className='question first'>
+                    <p>Are you satisfied with the current temperature?</p>
+                    <LikeOutlined/>
+                    <DislikeOutlined/>
+                </div> */}
+                <div className='question second'>
+                <CustomSlider className='custom-slider' min={0} max={6} />
+               
+                </div>
+                <div className='question third'>
+
+                </div>
+                
+
+                
+                <a onClick={handleSubmitClick} href='#' className='submitBtn'>Submit</a>
             </div>
             
             
         </div>
             
-            <div className='contentRef2' ref={contentRef2} style={{position: 'absolute'}}>
+            <div className='contentRef2' ref={contentRef2} style={{position: 'absolute',zIndex: zIndexRef2, opacity: opacityRef2 }}>
                 <ul className='floor-list-container'>
                     <li className='trigger' onMouseEnter={() => setisVisible(true)}>
                         <div className='selector-indication'>Select floor <DownOutlined /> </div>
@@ -147,7 +231,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 <div className='buttonContainer'>
                     {rooms.map((room, index) => (                        
                         <div className='btn' key ={room.id}>
-                            <a href="#" ref={el => roomsRefs.current[index] = el} 
+                            <a ref={el => roomsRefs.current[index] = el} 
                             className='btn-flip' 
                             
                            

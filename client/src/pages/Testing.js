@@ -9,12 +9,9 @@ function Testing() {
     const [rooms, setRooms] = useState([]);
     const [error, setError] = useState(null);
     const [temperature, setTemperature] = useState(false);
-    const [loading, setLoading] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [selectedRoomId, setSelectedRoomId] = useState(null);
-    
-   
+    const [selectedRoomId, setSelectedRoomId] = useState(null); 
 
 
     const handleRoomClick =  async (roomNumber, roomId) => {
@@ -56,13 +53,11 @@ function Testing() {
         }
     };
 
-    
-
-    
-  
     const resetSelectedRoom = () => {
         setSelectedRoomId(null);
     };
+
+    
 
     return (
       <div className="homepage">
