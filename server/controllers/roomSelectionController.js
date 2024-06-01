@@ -56,9 +56,17 @@ try {
     for (let page = totalPages; page>0; page--){
       const roomDataUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}&page=${totalPages}`;
       const roomData = await fetchDatawithToken(roomDataUrl, token);
+      console.log(roomData);
       const temperatureData = roomData.results.reverse().find(entry => entry.temperature !== undefined);
       if (temperatureData) {
         console.log('Latest temperature data:', temperatureData);
+        return res.json(Math.round(temperatureData.temperature));
+      }
+      else {
+        const roomDataUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}&page=${totalPages-1}`;
+        const roomData = await fetchDatawithToken(roomDataUrl, token);
+        console.log(roomData);
+        const temperatureData = roomData.results.reverse().find(entry => entry.temperature !== undefined);
         return res.json(Math.round(temperatureData.temperature));
       }
     }

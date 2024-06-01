@@ -21,6 +21,7 @@
 
 .btn-flip:hover{
   background-color: transparent;
+  cursor: pointer;
 }
 
 /* Author: Alex Moore

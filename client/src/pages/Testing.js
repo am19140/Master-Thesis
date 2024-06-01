@@ -3,11 +3,14 @@ import Character from '../components/Character';
 import { Grid, Paper } from '@mui/material';
 import '../styles/homepage.css'
 import FloorPlan from '../components/FloorPlan';
+
+
 import SpaceSelector from '../components/RoomSelector';
 
 function Testing() {
     const [rooms, setRooms] = useState([]);
     const [error, setError] = useState(null);
+    const [floor, setFloor] = useState(0);  
     const [temperature, setTemperature] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,8 +68,8 @@ function Testing() {
                 
             <>
             <Grid container spacing={3}  className='gridBig'>
-                <Grid item xs={12} sm={8}>
-                    <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} />
+                <Grid item xs={12} sm={8} className='left-side'>
+                    <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} floor={floor}/>
                 </Grid>
 
                 <Grid item xs={12} sm={4} className='right-side'>    
@@ -77,6 +80,8 @@ function Testing() {
                             handleRoomClick={handleRoomClick}
                             temperature={temperature}
                             loading={loading}
+                            floor={floor}
+                            setFloor={setFloor}
                             />                
                     </div>                
                 </Grid>

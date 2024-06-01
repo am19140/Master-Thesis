@@ -1,6 +1,13 @@
 
+svg {
+    width: 100%; 
+    height: auto; 
+    max-width: 100%; 
+    display: block;  
+}
 svg rect[id] {
     transition: fill 0.5s ease;
+    stroke-width: 0;
     
 }
 /* svg rect:not([id]) {
@@ -9,6 +16,11 @@ svg rect[id] {
 } */
 svg path[id] {
     transition: fill 0.5s ease;
+    stroke-width: 0;
+}
+
+svg image{
+    fill:#538dffff;
 }
 
 svg rect[id]:hover{

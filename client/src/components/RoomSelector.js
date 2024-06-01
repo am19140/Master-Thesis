@@ -13,10 +13,10 @@ import '../styles/snowman.css'
 import CustomSlider from './CustomSlider';
 
 
-function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading }) {
+function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor }) {
 
     
-    const [floor, setFloor] = useState(0);  
+    
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
@@ -96,7 +96,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             } else {
                 setOpacityRef1(0.5);
                 setOpacityRef2(1); 
-                gsap.to(contentRef1.current, { x: -200, opacity: 0, duration: 1 });
+                gsap.to(contentRef1.current, { x: -50, opacity: 0, duration: 1 });
                 gsap.to(contentRef2.current, { x: 0, opacity: 1, duration: 1 });
             }
         }

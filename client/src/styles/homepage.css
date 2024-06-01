@@ -15,6 +15,15 @@
   
 }
 
+.left-side{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
 .right-side{
   padding: 0px !important;
   color: #fff;
