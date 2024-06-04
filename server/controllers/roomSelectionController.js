@@ -2,8 +2,9 @@ import {getToken, fetchDatawithToken} from '../services/httpClient.js';
 // import FallbackData from '../../client/src/data/MOCK_DATA.json' assert{type:'json'};
 
 
+
 export const getRoomsPerFloor = async (req, res) => {
-  console.log('getroomsperfloor');
+  //console.log('getroomsperfloor');
   const username = 'mariana';
   const password = '532xr]~MpYg|';
   const floor = req.query.floor;
@@ -29,12 +30,15 @@ export const getRoomTemp = async (req, res) => {
   console.log(roomId);
   const now = new Date();
   const endTime = now.toISOString();  
-  const threeHoursAgo = new Date(now.getTime() - (4 * 60 * 60 * 1000)).toISOString(); // 3 hours ago in ISO 8601
+  const threeHoursAgo = new Date(now.getTime() - (3 * 60 * 60 * 1000)).toISOString(); // 3 hours ago in ISO 8601
   console.log(threeHoursAgo);
   console.log(endTime);
   const getpeginationUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}`;
   //const roomsUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${threeHoursAgo}&endTime=${endTime}`
   const url = 'http://leffe.science.uva.nl:8042/auth/login';
+
+
+
   
 try {
     const token = await getToken(url, username, password);
@@ -56,16 +60,16 @@ try {
     for (let page = totalPages; page>0; page--){
       const roomDataUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}&page=${totalPages}`;
       const roomData = await fetchDatawithToken(roomDataUrl, token);
-      console.log(roomData);
+      //console.log(roomData);
       const temperatureData = roomData.results.reverse().find(entry => entry.temperature !== undefined);
       if (temperatureData) {
-        console.log('Latest temperature data:', temperatureData);
+        //console.log('Latest temperature data:', temperatureData);
         return res.json(Math.round(temperatureData.temperature));
       }
       else {
         const roomDataUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}&page=${totalPages-1}`;
         const roomData = await fetchDatawithToken(roomDataUrl, token);
-        console.log(roomData);
+        //console.log(roomData);
         const temperatureData = roomData.results.reverse().find(entry => entry.temperature !== undefined);
         return res.json(Math.round(temperatureData.temperature));
       }

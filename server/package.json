@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "express": "^4.19.2",
+    "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2"
   }
 }

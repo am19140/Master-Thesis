@@ -1,7 +1,17 @@
 import fetch from 'node-fetch';
 
+let cachedToken = null;
+let tokenExpiry = null;
+
 const getToken = async (url, username,password) => {
-    try {
+    
+  const now = new Date();
+
+  if (cachedToken && tokenExpiry && tokenExpiry > now) {
+    return cachedToken;
+  }
+
+  try {
         const options = {
           method: 'POST',
           headers: {
@@ -15,7 +25,11 @@ const getToken = async (url, username,password) => {
           throw new Error(`HTTP error during login! Status: ${response.status}`);
         }
         const data = await response.json();
-        return data.access_token;  
+        cachedToken = data.access_token;
+        // 1 hour
+        tokenExpiry = new Date(now.getTime() + 3600 * 1000);
+        return cachedToken;
+         
       } catch (error) {
         console.error('Error during authentication:', error);
         throw error;

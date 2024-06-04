@@ -8,8 +8,11 @@ svg {
 svg rect[id] {
     transition: fill 0.5s ease;
     stroke-width: 0;
+    fill: #fff;
     
 }
+
+
 /* svg rect:not([id]) {
     fill:grey;
     
@@ -17,6 +20,7 @@ svg rect[id] {
 svg path[id] {
     transition: fill 0.5s ease;
     stroke-width: 0;
+    fill: #fff;
 }
 
 svg image{

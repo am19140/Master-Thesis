@@ -4,22 +4,23 @@ import '../styles/homepage.css'
 import '../styles/custombutton.css'
 import '../styles/roomselector.css'
 import { gsap } from 'gsap';
-import { DownOutlined, CloseCircleOutlined, LikeOutlined,DislikeOutlined} from '@ant-design/icons';
+import { DownOutlined, CloseCircleOutlined, LikeOutlined,DislikeOutlined, LoadingOutlined} from '@ant-design/icons';
 import backArrow from '../images/back-arrow.png';
-import { Spin } from 'antd';
+import { Spin, Progress } from 'antd';
 import {ReactComponent as Snowman} from '../images/snowman.svg'
 import '../styles/snowman.css'
 
 import CustomSlider from './CustomSlider';
 
 
-function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor }) {
+function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,progress }) {
 
     
     
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
+    
     const [isSnowmanVisible, setisSnowmanVisible] = useState(false);
     const roomsRefs = useRef([]);
     const contentRef1 = useRef(null);
@@ -127,6 +128,8 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
     
 
+    
+
     const handleFloorMenu = (i) => {
         setFloor(i);
         setisVisible(false);
@@ -144,11 +147,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         
     };
    
-
-      function valuetext(value) {
-        return `${value}°C`;
-      }
-
     
 
     return (
@@ -166,7 +164,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             </div>
         }
         
-        {loading && <div ref={load} className='spinner'> <Spin size='large'/> </div>  }
+        {loading && <div ref={load} className='spinner'> <Spin indicator={<LoadingOutlined style={{ fontSize: 24, color:"#fff" }} spin />}/> </div>  }
         
         <div ref={contentRef1} style={{position: 'absolute',zIndex: zIndexRef1, opacity: opacityRef1 }} className='contentRef1'>
             <a onClick={resetSelectedRoom} className='back-arrow'href="">                            
