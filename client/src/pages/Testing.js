@@ -75,7 +75,7 @@ function Testing() {
             // Assume data is valid for 10 minutes
             if (new Date(parsedData.timestamp).getTime() + 600000 > now.getTime()) {
                 setTemperature(parsedData.temperature);
-                setSelectedRoomId(room_number);
+                setSelectedRoomId(roomId);
                 return;
             }
         }

@@ -27,7 +27,8 @@ export const getRoomTemp = async (req, res) => {
   const username = 'mariana';
   const password = '532xr]~MpYg|';
   const roomId = req.params.roomId;
-  console.log(roomId);
+  console.log(req.params);
+  console.log("Room id: ",roomId);
   const now = new Date();
   const endTime = now.toISOString();  
   const threeHoursAgo = new Date(now.getTime() - (3 * 60 * 60 * 1000)).toISOString(); // 3 hours ago in ISO 8601
@@ -49,6 +50,7 @@ try {
     // Getting the total number of pages of data
     const getPages = await fetchDatawithToken(getpeginationUrl, token)
     
+
     if (!getPages || getPages.results.length === 0) {
       console.log('No data available for the given room.');
       res.status(404).json({message: "No data available"});
