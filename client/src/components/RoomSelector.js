@@ -6,21 +6,19 @@ import '../styles/roomselector.css'
 import { gsap } from 'gsap';
 import { DownOutlined, CloseCircleOutlined, LikeOutlined,DislikeOutlined, LoadingOutlined} from '@ant-design/icons';
 import backArrow from '../images/back-arrow.png';
-import { Spin, Progress } from 'antd';
+import { Spin, Progress, Radio } from 'antd';
 import {ReactComponent as Snowman} from '../images/snowman.svg'
 import '../styles/snowman.css'
-
 import CustomSlider from './CustomSlider';
+import RadioButtons from './RadioButtons';
 
 
 function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,progress }) {
 
-    
-    
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
-    
+    const [radioValue, setRadioValue] = useState('comfortable');
     const [isSnowmanVisible, setisSnowmanVisible] = useState(false);
     const roomsRefs = useRef([]);
     const contentRef1 = useRef(null);
@@ -146,6 +144,10 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         setisSnowmanVisible(false);       
         
     };
+
+    const handleRadioChange = e => {
+        setRadioValue(e.target.value);
+    };
    
     
 
@@ -173,9 +175,12 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             <div className='title'>Room {selectedRoomId}'s Conditions</div>
             <div className='conditions-component'>
                 <div className='thermal-conditions'>
-                   <h1>{temperature}°</h1> 
+                    {/* Temperature display */}
+                   <h1>{temperature !== null ? <div>{temperature}°</div> : <div>No temperature data</div>}</h1> 
+                    {/* Subjective data */}
                    <p>Most students perceive this room as cold</p>
                 </div>
+                {/* Perfect for? */}
                 <div className='badge'>
                     <Snowman/>
                 </div>
@@ -184,21 +189,15 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             <div className='feedback-component'>
                 <h3>Do you have any complaints about your room?</h3>
                 
-                {/* <div className='question first'>
-                    <p>Are you satisfied with the current temperature?</p>
-                    <LikeOutlined/>
-                    <DislikeOutlined/>
-                </div> */}
+                <div className='question first'>
+                <RadioButtons value={radioValue} onChange={handleRadioChange}/>
+                </div> 
                 <div className='question second'>
                 <CustomSlider className='custom-slider' min={0} max={6} />
-               
                 </div>
                 <div className='question third'>
 
-                </div>
-                
-
-                
+                </div>                    
                 <a onClick={handleSubmitClick} href='#' className='submitBtn'>Submit</a>
             </div>
             

@@ -3,7 +3,7 @@ import { Slider } from 'antd';
 import fireGif from '../images/icon-fire.gif'
 import snowflakeGif from '../images/icon-snowflake.gif'
 
-const ThermalSlider = () => {
+const CustomSlider = () => {
   const [value, setValue] = useState(0); // Default to neutral
 
   const createMarks = (currentValue) => ({
@@ -22,7 +22,7 @@ const ThermalSlider = () => {
 
   return (
     <>
-    <p>How do you feel about this room?</p>
+    <h4>Right now, how are you feeling about this room?</h4>
       <div className='slider-wrapper'>
         
         <img src={snowflakeGif}></img>
@@ -43,4 +43,4 @@ const ThermalSlider = () => {
   );
 };
 
-export default ThermalSlider;
+export default CustomSlider;

@@ -38,7 +38,7 @@
     }
 
     .ant-slider .ant-slider-mark-text-active{
-        color:#6A6AD2;
+        color:#fff;
         font-weight: 500;
     }
 
@@ -55,7 +55,7 @@
     }
 
     .feedback-component h3{
-        color: #73a2ff;
+        color: #AAD5D5;
         text-align: center;
     }
 
@@ -96,7 +96,7 @@
         width: 100%;
     }
     .svgContainer .back-arrow .circleClose{
-        width:50%;
+        width:10%;
         cursor: pointer;
         margin: 0.5rem;
     }
@@ -129,7 +129,7 @@
    
 
     .contentRef1 .conditions-component{
-        background-color: #AAD5D5 ;
+        background-color: #191970 ;
         padding: 0.5rem;
         border-radius: 10px;
         display: flex;
@@ -141,7 +141,8 @@
     }
 
     .contentRef1 .feedback-component{
-            background-color: #AAD5D5 ;
+            /* background-color: #AAD5D5 ; */
+            background-color: #191970;
             padding: 0.5rem;
             border-radius: 10px;
             display: flex;
@@ -267,6 +268,61 @@
         .contentRef1 .badge {
             width: 40%;
         }
+
+        .custom-radio .radio-btns{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .custom-radio .radio-option{
+            color: #fff;
+        }
+
+        .ant-radio-checked .ant-radio-inner{
+            border:none !important ;
+          }
+          
+          /* Cold option styles */
+        .cold-option .ant-radio-inner::after {
+            background-color: #AAD5D5;
+        }
+
+        /* Comfortable option styles */
+        .comf-option .ant-radio-inner::after {
+            background-color: #73a2ff;
+        }
+
+
+        /* Hot option styles */
+        .hot-option .ant-radio-inner::after {
+            background-color: #ff7373;
+        }
+          
+          .ant-radio:hover .ant-radio-inner {
+            border:none;
+          }
+
+          .ant-radio-checked .ant-radio-inner:focus{
+            border:none;
+          }
+          
+          .ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
+            background-color: #73a2ff;
+          }
+
+          .custom-radio .hot-option.ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
+            background-color: #ff7373;
+          }
+
+          .custom-radio .comf-option.ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
+            background-color: #73a2ff;
+          }
+
+          .custom-radio .cold-option.ant-radio-wrapper .ant-radio-checked .ant-radio-inner{
+            background-color: #AAD5D5;
+          }
+
 
 
 

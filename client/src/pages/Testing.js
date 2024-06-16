@@ -68,6 +68,7 @@ function Testing() {
 
         const cacheKey = `room_temp_${roomId}`;
         const cachedData = localStorage.getItem(cacheKey);
+        
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
             const now = new Date();
