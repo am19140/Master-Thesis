@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Master-Thesis/static/css/main.8d365319.css",
-    "main.js": "/Master-Thesis/static/js/main.b7ca4aad.js",
+    "main.js": "/Master-Thesis/static/js/main.d99c087d.js",
     "static/js/453.258b012d.chunk.js": "/Master-Thesis/static/js/453.258b012d.chunk.js",
     "static/media/snowman.svg": "/Master-Thesis/static/media/snowman.5f395f94cd494eb1bdf554ffcc21c75e.svg",
     "static/media/floor1.svg": "/Master-Thesis/static/media/floor1.f0c158f85fdfdb0ba1c76dd4ebac6c64.svg",
@@ -11,11 +11,11 @@
     "static/media/logo.svg": "/Master-Thesis/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/Master-Thesis/index.html",
     "main.8d365319.css.map": "/Master-Thesis/static/css/main.8d365319.css.map",
-    "main.b7ca4aad.js.map": "/Master-Thesis/static/js/main.b7ca4aad.js.map",
+    "main.d99c087d.js.map": "/Master-Thesis/static/js/main.d99c087d.js.map",
     "453.258b012d.chunk.js.map": "/Master-Thesis/static/js/453.258b012d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8d365319.css",
-    "static/js/main.b7ca4aad.js"
+    "static/js/main.d99c087d.js"
   ]
 }
