@@ -1,12 +1,19 @@
 // Imports
 import express from 'express';
+import cors from 'cors';
 import swaggerAPIRouter from './routes/swaggerAPIRouter.js';
 
 // Initiliazing
 const app = express();
 
 //Middlewares
+app.use(cors({
+  origin: 'https://am19140.github.io/',  
+}));
 app.get('/api/httpclient', )
+
+app.use(express.json());
+
 
 // Routes
 app.get('/', (req, res) => {

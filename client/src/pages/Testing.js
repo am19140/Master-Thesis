@@ -18,7 +18,7 @@ function Testing() {
 
     useEffect(() => {
         if (loading && selectedRoomId) {
-          const eventSource = new EventSource(`/api/room_temp/${selectedRoomId}`);
+          const eventSource = new EventSource(`https://dashboard.heroku.com/apps/master-thesis-app/api/room_temp/${selectedRoomId}`);
     
           eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -68,7 +68,7 @@ function Testing() {
 
         const cacheKey = `room_temp_${roomId}`;
         const cachedData = localStorage.getItem(cacheKey);
-        
+
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
             const now = new Date();
@@ -83,7 +83,7 @@ function Testing() {
 
         
         setLoading(true);    
-        fetch(`/api/room_temp/${roomId}`)
+        fetch(`https://dashboard.heroku.com/apps/master-thesis-app/api/room_temp/${roomId}`)
             .then((response) => {
                 if (!response.ok) throw new Error('Failed to fetch temperature data');
                 setProgress(70);

@@ -1,7 +1,4 @@
 import {getToken, fetchDatawithToken} from '../services/httpClient.js';
-// import FallbackData from '../../client/src/data/MOCK_DATA.json' assert{type:'json'};
-
-
 
 export const getRoomsPerFloor = async (req, res) => {
   //console.log('getroomsperfloor');
@@ -31,7 +28,7 @@ export const getRoomTemp = async (req, res) => {
   console.log("Room id: ",roomId);
   const now = new Date();
   const endTime = now.toISOString();  
-  const threeHoursAgo = new Date(now.getTime() - (3 * 60 * 60 * 1000)).toISOString(); // 3 hours ago in ISO 8601
+  const threeHoursAgo = new Date(now.getTime() - (4 * 60 * 60 * 1000)).toISOString(); // 3 hours ago in ISO 8601
   console.log(threeHoursAgo);
   console.log(endTime);
   const getpeginationUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}`;
