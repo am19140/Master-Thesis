@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node index.js --prefix server",
     "start-client": "npm start --prefix client",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
-    "build-client": "npm run build --prefix client",
-    "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client"
+    "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client",
+    "build-client": "npm run build --prefix client"
   },
  
   "engines": {
