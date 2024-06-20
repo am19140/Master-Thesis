@@ -9,9 +9,7 @@
     "build-client": "npm run build --prefix client",
     "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client"
   },
-  "dependencies": {
-    "concurrently": "8.2.2"
-  },
+ 
   "engines": {
     "node": "20.x"
   }
