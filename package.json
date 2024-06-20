@@ -7,7 +7,8 @@
     "start-client": "npm start --prefix client",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
-    "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client",
+    "heroku-postbuild": "npm run build-client",
+    "postinstall": "npm run install-client && npm run install-server",
     "build-client": "npm run build --prefix client"
   },
  
