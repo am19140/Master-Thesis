@@ -7,9 +7,7 @@ import swaggerAPIRouter from './routes/swaggerAPIRouter.js';
 const app = express();
 
 //Middlewares
-app.use(cors({
-  origin: 'https://am19140.github.io/',  
-}));
+
 app.get('/api/httpclient', )
 
 app.use(express.json());
