@@ -1,11 +1,11 @@
 {
-  "dependencies": {
-    "@svgr/webpack": "^8.1.0",
-    "body-parser": "^1.20.2",
-    "express": "^4.19.2",
-    "gh-pages": "^6.1.1",
-    "mysql2": "^3.10.1",
-    "node-fetch": "^3.3.2",
-    "sequelize": "^6.37.3"
+  "name": "thermal-app",
+  "version": "1.0.0",
+  "main": "",
+  "scripts": {
+    "start": "npm start --prefix server",
+    "install-client": "cd client && npm install && npm run build && cd ..",
+    "install-server": "cd server && npm install && cd ..",
+    "heroku-postbuild": "npm run install-client && npm run install-server"
   }
 }
