@@ -4,10 +4,9 @@
   "main": "",
   "scripts": {
     "start": "node server/index.js",
-    "install-client": "npm install --prefix client",
-    "install-server": "npm install --prefix server",
-    "build-client": "npm run build --prefix client",
-    "heroku-postbuild": "npm run install-client && npm run install-server && npm run build-client"
+    "install-client": "cd client && npm install && npm run build && cd ..",
+    "install-server": "cd server && npm install && cd ..",
+    "heroku-postbuild": "npm run install-client && npm run install-server"
   },
  
   "engines": {
