@@ -4,20 +4,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "description": "",
-  "homepage": "https://<username>.github.io/<repo-name>",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.19.2",
     "node-cache": "^5.1.2",
-    "node-fetch": "^3.3.2",
-    "semver": "^7.6.2",
-    "sequelize": "^6.37.3"
+    "node-fetch": "^3.3.2"
   }
 }
