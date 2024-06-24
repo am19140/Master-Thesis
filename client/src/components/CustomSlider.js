@@ -3,8 +3,7 @@ import { Slider } from 'antd';
 import fireGif from '../images/icon-fire.gif'
 import snowflakeGif from '../images/icon-snowflake.gif'
 
-const CustomSlider = () => {
-  const [value, setValue] = useState(0); // Default to neutral
+const CustomSlider = ({value, onChange}) => {
 
   const createMarks = (currentValue) => ({
     3: currentValue === 3 ? 'Hot' : '',
@@ -16,9 +15,9 @@ const CustomSlider = () => {
    ' -3': currentValue === -3 ? 'Cold' : ''
   });
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (newValue) => {
+  //   setValue(newValue);
+  // };
 
   return (
     <>
@@ -31,7 +30,7 @@ const CustomSlider = () => {
           max={3}
           marks={createMarks(value)}
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
           tooltip={{
             open: false
           }}
