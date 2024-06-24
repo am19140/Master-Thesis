@@ -12,7 +12,7 @@ const CustomSlider = ({value, onChange}) => {
     0: currentValue === 0 ? 'Comfortable' : '',
     '-1': currentValue === -1 ? 'Slightly cool' : '',
     '-2': currentValue === -2 ? 'Cool' : '',
-   ' -3': currentValue === -3 ? 'Cold' : ''
+    '-3': currentValue === -3 ? 'Cold' : ''
   });
 
   // const handleChange = (newValue) => {

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/homepage.css'
 import '../styles/custombutton.css'
@@ -18,6 +19,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const [rooms, setRooms] = useState([]);
     const [isVisible, setisVisible] = useState(false);
     const [radioValue, setRadioValue] = useState('comfortable');
+    const [sliderValue, setSliderValue] = useState(0); 
     const [isSnowmanVisible, setisSnowmanVisible] = useState(false);
     const roomsRefs = useRef([]);
     const contentRef1 = useRef(null);
@@ -53,22 +55,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         fetchRooms();
     }, [floor]);
 
-    // useEffect(() => {
-    //     const fetchTemperature = (roomId) => {
     
-    //     for (const floor in FallbackData.floors) {
-    //         if (FallbackData.floors[floor].rooms[roomId]) {
-    //         return FallbackData.floors[floor].rooms[roomId].temperature;
-    //         }
-    //     }
-    //     return 'Room not found'; 
-    //     };
-
-    //     if (selectedRoomId) {
-    //     const temp = fetchTemperature(selectedRoomId);
-    //     setTemperature(temp);
-    //     }
-    // }, [selectedRoomId]);
 
     useEffect(() => {
         if (roomsRefs.current.length > 0) {
@@ -132,10 +119,44 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         setisVisible(false);
     }
 
-    const handleSubmitClick = (event) => {
-        event.stopPropagation();
-        setisSnowmanVisible(true);       
+    const handleSubmitClick = async (event) => {
+
+        //event.stopPropagation();
         
+        event.preventDefault();
+        console.log("Radio value: ",radioValue);
+        console.log("Slider value: ",sliderValue);
+        console.log("ID: ",selectedRoomId);
+        const payload = {
+            perception: sliderValue,
+            usual_behaviour: radioValue,
+            floor: floor,
+            room: selectedRoomId
+        };
+
+        const payload_json = JSON.stringify(payload);
+        console.log(payload_json);
+        try{
+            const response = await fetch(`/api/submission`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(payload) 
+            });
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Feedback submitted successfully:', data);
+                setisSnowmanVisible(true); 
+            } else {
+                throw new Error(data.message); 
+            }
+
+
+        }
+        catch (error) {
+            console.error('Error submitting feedback:', error.message);
+        }
     };
 
     const handleCloseAvatar = (event) => {
@@ -145,7 +166,12 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     };
 
     const handleRadioChange = e => {
+        
         setRadioValue(e.target.value);
+    };
+
+    const handleSliderChange = (value) => {
+        setSliderValue(value);
     };
    
     
@@ -175,7 +201,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             <div className='conditions-component'>
                 <div className='thermal-conditions'>
                     {/* Temperature display */}
-                   <h1>{temperature !== null ? <div>{temperature}°</div> : <div>No temperature data</div>}</h1> 
+                   <h1>{temperature !== null ? <div>{temperature}°</div> : <div>No data</div>}</h1> 
                     {/* Subjective data */}
                    <p>Most students perceive this room as cold</p>
                 </div>
@@ -192,11 +218,9 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 <RadioButtons value={radioValue} onChange={handleRadioChange}/>
                 </div> 
                 <div className='question second'>
-                <CustomSlider className='custom-slider' min={0} max={6} />
+                <CustomSlider value={sliderValue} onChange={handleSliderChange} className='custom-slider' min={0} max={6} />
                 </div>
-                <div className='question third'>
-
-                </div>                    
+                                   
                 <a onClick={handleSubmitClick} href='#' className='submitBtn'>Submit</a>
             </div>
             

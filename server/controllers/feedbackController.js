@@ -4,6 +4,7 @@ export const submitFeedback = async (req, res) => {
     console.log(req.body);
     const temperaturePreference = req.body.usual_behaviour;
     const perception  = req.body.perception;
+    const floor = req.body.floor;
     console.log("Temp",temperaturePreference);
     console.log("Perception", perception);
     const now = new Date();
@@ -14,6 +15,7 @@ export const submitFeedback = async (req, res) => {
         const newFeedback = await Feedback.create({
             temperaturePreference,
             perception,
+            floor,
             timestamp
         });
 

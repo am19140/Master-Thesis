@@ -3,7 +3,10 @@ import Character from '../components/Character';
 import { Grid, Paper } from '@mui/material';
 import '../styles/homepage.css'
 import FloorPlan from '../components/FloorPlan';
+
+
 import SpaceSelector from '../components/RoomSelector';
+
 function Testing() {
     
     const [floor, setFloor] = useState(0);  
@@ -11,6 +14,8 @@ function Testing() {
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [selectedRoomId, setSelectedRoomId] = useState(null); 
+
+
     useEffect(() => {
         if (loading && selectedRoomId) {
           const eventSource = new EventSource(`/api/room_temp/${selectedRoomId}`);
@@ -38,11 +43,14 @@ function Testing() {
           };
         }
       }, [loading, selectedRoomId]);
+
+
     const handleRoomClick =  async (roomNumber, roomId) => {
         
         console.log(`Clicked on room with id: ${roomId}`);
         console.log(`Clicked on room with no: ${roomNumber}`);
         
+
         if (typeof roomNumber !== 'string') {
             console.error('Invalid roomNumber:', roomNumber);
             return;
@@ -72,6 +80,7 @@ function Testing() {
                 return;
             }
         }
+
         
         setLoading(true);    
         fetch(`/api/room_temp/${roomId}`)
@@ -99,18 +108,23 @@ function Testing() {
             });
         
     };
+
     const resetSelectedRoom = () => {
         setSelectedRoomId(null);
     };
+
     
+
     return (
       <div className="homepage">
+
                 
             <>
             <Grid container spacing={3}  className='gridBig'>
                 <Grid item xs={12} sm={8} className='left-side'>
                     <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} floor={floor}/>
                 </Grid>
+
                 <Grid item xs={12} sm={4} className='right-side'>    
                     <div className='rightContainer'>
                         <SpaceSelector 
@@ -126,8 +140,11 @@ function Testing() {
                     </div>                
                 </Grid>
             </Grid>
+
+
             
           
+
             </>
    
       </div>
