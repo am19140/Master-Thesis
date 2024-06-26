@@ -24,7 +24,8 @@ const Feedback = database.define('feedback', {
 
   floor:{
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    isIn: [[0,1]]
   },
 
   room: {

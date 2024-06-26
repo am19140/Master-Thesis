@@ -14,17 +14,17 @@ function Testing() {
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [selectedRoomId, setSelectedRoomId] = useState(null); 
-
+    const [selectedRoomNumber, setSelectedRoomNumber] = useState(null); 
+    const [cacheKey, setCacheKey] = useState(null); 
 
     useEffect(() => {
         if (loading && selectedRoomId) {
+          console.log('This is the room id?: ',selectedRoomId);
           const eventSource = new EventSource(`/api/room_temp/${selectedRoomId}`);
     
           eventSource.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            if (data.percent !== undefined) {
-              setProgress(data.percent);
-            }
+            
             if (data.temperature !== undefined) {
               setTemperature(data.temperature);
               setLoading(false);
@@ -47,9 +47,9 @@ function Testing() {
 
     const handleRoomClick =  async (roomNumber, roomId) => {
         
-        console.log(`Clicked on room with id: ${roomId}`);
-        console.log(`Clicked on room with no: ${roomNumber}`);
-        
+      console.log(`Clicked on room with ID: ${roomId} and Number: ${roomNumber}`);
+      setSelectedRoomNumber(roomNumber);
+      setCacheKey(`room_temp_${roomId}`);
 
         if (typeof roomNumber !== 'string') {
             console.error('Invalid roomNumber:', roomNumber);
@@ -62,12 +62,9 @@ function Testing() {
                 room_number = roomNumber.split("-")[1];
             }
         }
-        
-        console.log(`Clicked on: ${room_number}`);
-        
-
-        const cacheKey = `room_temp_${roomId}`;
+     
         const cachedData = localStorage.getItem(cacheKey);
+        console.log(localStorage);
 
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
@@ -76,23 +73,23 @@ function Testing() {
             // Assume data is valid for 10 minutes
             if (new Date(parsedData.timestamp).getTime() + 600000 > now.getTime()) {
                 setTemperature(parsedData.temperature);
+                console.log('-----------cached id ---------',roomId);
                 setSelectedRoomId(roomId);
                 return;
             }
         }
 
         
-        setLoading(true);    
+        setLoading(true);  
+        
+        
         fetch(`/api/room_temp/${roomId}`)
             .then((response) => {
                 if (!response.ok) throw new Error('Failed to fetch temperature data');
-                setProgress(70);
                 return response.json();
             })
             .then((data) => {
                 console.log(data);
-                setProgress(90);
-                console.log(progress);
                 setTemperature(data);
                 localStorage.setItem(cacheKey, JSON.stringify({
                     temperature: data,
@@ -104,7 +101,7 @@ function Testing() {
             })
             .finally(() => {
                 setLoading(false);
-                setSelectedRoomId(room_number);
+                setSelectedRoomId(roomId);
             });
         
     };
@@ -135,7 +132,7 @@ function Testing() {
                             loading={loading}
                             floor={floor}
                             setFloor={setFloor}
-                            
+                            selectedRoomNumber = {selectedRoomNumber}
                             />                
                     </div>                
                 </Grid>

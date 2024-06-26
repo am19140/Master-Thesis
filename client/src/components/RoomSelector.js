@@ -6,14 +6,14 @@ import '../styles/roomselector.css'
 import { gsap } from 'gsap';
 import { DownOutlined, CloseCircleOutlined, LikeOutlined,DislikeOutlined, LoadingOutlined} from '@ant-design/icons';
 import backArrow from '../images/back-arrow.png';
-import { Spin, Progress, Radio } from 'antd';
+import { Spin} from 'antd';
 import {ReactComponent as Snowman} from '../images/snowman.svg'
 import '../styles/snowman.css'
 import CustomSlider from './CustomSlider';
 import RadioButtons from './RadioButtons';
 
 
-function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,progress }) {
+function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,selectedRoomNumber }) {
 
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
@@ -27,7 +27,9 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const svgRef = useRef(null);
     const [opacityRef1, setOpacityRef1] = useState(1);
     const [opacityRef2, setOpacityRef2] = useState(0);
-    const load = useRef(null);   
+    const load = useRef(null); 
+    const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+    const [perceptionMessage, setPerceptionMessage] = useState(null);
 
     
 
@@ -39,6 +41,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         const fetchRooms = async () => {
            
             try {
+                
                 const response = await fetch(`/api/selection?floor=${floor}`);
                 if (!response.ok) throw new Error('Failed to fetch rooms');
                 const data = await response.json();
@@ -147,6 +150,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             const data = await response.json();
             if (response.ok) {
                 console.log('Feedback submitted successfully:', data);
+                setFeedbackSubmitted(true);
                 setisSnowmanVisible(true); 
             } else {
                 throw new Error(data.message); 
@@ -173,6 +177,18 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const handleSliderChange = (value) => {
         setSliderValue(value);
     };
+
+    useEffect(() => {
+        if (selectedRoomId) {
+            fetch(`/api/feedback/${selectedRoomId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Feedback data:', data);
+                    setPerceptionMessage(data.message);
+                })
+                .catch(error => console.error('Error fetching room feedback:', error));
+        }
+    }, [selectedRoomId]);
    
     
 
@@ -197,32 +213,45 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             <a onClick={resetSelectedRoom} className='back-arrow'href="">                            
                 <img src={backArrow} alt="Back" />
             </a>
-            <div className='title'>Room {selectedRoomId}'s Conditions</div>
-            <div className='conditions-component'>
-                <div className='thermal-conditions'>
-                    {/* Temperature display */}
-                   <h1>{temperature !== null ? <div>{temperature}°</div> : <div>No data</div>}</h1> 
-                    {/* Subjective data */}
-                   <p>Most students perceive this room as cold</p>
-                </div>
-                {/* Perfect for? */}
-                <div className='badge'>
-                    <Snowman/>
-                </div>
-            </div>
+            
+            {feedbackSubmitted && (
+                <>
+                    <div className='title'>Room {selectedRoomNumber}'s Conditions</div>
+                    <div className='conditions-component'>
+                    
+                        <div className='thermal-conditions'>
+                            <h1>{temperature !== null ? `${temperature}°` : "No data"}</h1>
+                            <p>{perceptionMessage}</p>
+                        </div>
+                        <div className='badge'>
+                            <Snowman />
+                        </div>
+                    </div>
+                </>
+
+                
+            )}
 
             <div className='feedback-component'>
-                <h3>Do you have any complaints about your room?</h3>
-                
-                <div className='question first'>
-                <RadioButtons value={radioValue} onChange={handleRadioChange}/>
-                </div> 
-                <div className='question second'>
-                <CustomSlider value={sliderValue} onChange={handleSliderChange} className='custom-slider' min={0} max={6} />
-                </div>
-                                   
-                <a onClick={handleSubmitClick} href='#' className='submitBtn'>Submit</a>
+                {feedbackSubmitted ? (
+                    <div>
+                        <h3>Thank you for being awesome!</h3>
+                        <p>We are now one step closer to improving LAB42!</p>
+                    </div>
+                ) : (
+                    <>
+                        <h3>Do you have any complaints about your room?</h3>
+                        <div className='question first'>
+                            <RadioButtons value={radioValue} onChange={handleRadioChange}/>
+                        </div>
+                        <div className='question second'>
+                            <CustomSlider value={sliderValue} onChange={handleSliderChange} className='custom-slider' min={0} max={6} />
+                        </div>
+                        <a onClick={handleSubmitClick} href='#' className='submitBtn'>Submit</a>
+                    </>
+                )}
             </div>
+
             
             
         </div>
@@ -234,7 +263,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
 
                     <ul className="floor-list" style={{visibility:isVisible ? 'visible' : 'hidden'}}>
-                    {Array.from({ length: 3 }, (_, i) => (
+                    {Array.from({ length: 2 }, (_, i) => (
                                 <li key={i} 
                                     className='floor-item' 
                                     onClick={() => 
