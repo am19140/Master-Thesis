@@ -16,6 +16,7 @@ function Testing() {
     const [selectedRoomId, setSelectedRoomId] = useState(null); 
     const [selectedRoomNumber, setSelectedRoomNumber] = useState(null); 
     const [cacheKey, setCacheKey] = useState(null); 
+    const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
     useEffect(() => {
         if (loading && selectedRoomId) {
@@ -49,6 +50,7 @@ function Testing() {
         
       console.log(`Clicked on room with ID: ${roomId} and Number: ${roomNumber}`);
       setSelectedRoomNumber(roomNumber);
+      setFeedbackSubmitted(false);
       setCacheKey(`room_temp_${roomId}`);
 
         if (typeof roomNumber !== 'string') {
@@ -133,6 +135,8 @@ function Testing() {
                             floor={floor}
                             setFloor={setFloor}
                             selectedRoomNumber = {selectedRoomNumber}
+                            setFeedbackSubmitted={setFeedbackSubmitted}
+                            feedbackSubmitted={feedbackSubmitted}
                             />                
                     </div>                
                 </Grid>

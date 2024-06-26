@@ -13,7 +13,7 @@ import CustomSlider from './CustomSlider';
 import RadioButtons from './RadioButtons';
 
 
-function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,selectedRoomNumber }) {
+function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,selectedRoomNumber, setFeedbackSubmitted, feedbackSubmitted }) {
 
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
@@ -28,8 +28,13 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const [opacityRef1, setOpacityRef1] = useState(1);
     const [opacityRef2, setOpacityRef2] = useState(0);
     const load = useRef(null); 
-    const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
-    const [perceptionMessage, setPerceptionMessage] = useState(null);
+    
+    const [roomFeedback, setRoomFeedback] = useState({
+        perceptions: [],
+        mostCommonPerceptions: [],  
+        isControversial: false,
+        message: ""
+    });
 
     
 
@@ -183,8 +188,12 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             fetch(`/api/feedback/${selectedRoomId}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Feedback data:', data);
-                    setPerceptionMessage(data.message);
+                    setRoomFeedback({
+                        perceptions: data.commonPerceptions,
+                        isControversial: data.isControversial,
+                        message: data.message,
+                        userAgrees: data.userAgrees
+                    });
                 })
                 .catch(error => console.error('Error fetching room feedback:', error));
         }
@@ -220,8 +229,11 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                     <div className='conditions-component'>
                     
                         <div className='thermal-conditions'>
-                            <h1>{temperature !== null ? `${temperature}°` : "No data"}</h1>
-                            <p>{perceptionMessage}</p>
+                            <div className='objective-temp'>{temperature !== null ? `${temperature}°` : "No data"}</div>
+                            <div className='subjective-temp'>
+                               {roomFeedback.message}
+                            </div>
+
                         </div>
                         <div className='badge'>
                             <Snowman />
