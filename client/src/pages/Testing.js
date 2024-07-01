@@ -120,8 +120,21 @@ function Testing() {
                 
             <>
             <Grid container spacing={3}  className='gridBig'>
-                <Grid item xs={12} sm={8} className='left-side'>
-                    <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} floor={floor}/>
+                <Grid item xs={12} sm={8} >
+                    <div className='left-side'>
+                      <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} floor={floor}/>
+                        <div className='legend'>
+                          <div className='legend-element'>
+                            <div className='colored-box tirquoise'></div>
+                            <div className='explanation'>Rooms equipped with temperature sensors</div>
+                          </div>
+                          <div className='legend-element'>
+                            <div className='colored-box blue'></div>
+                            <div className='explanation'>Selected room</div>
+                          </div>
+                        </div>
+                    </div>
+                    
                 </Grid>
 
                 <Grid item xs={12} sm={4} className='right-side'>    

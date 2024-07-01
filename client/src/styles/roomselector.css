@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
 *{
     box-sizing: border-box;
+    font-family: 'Poppins', cursive;
+
 }
 
 .dropDownMenu{
@@ -21,10 +25,11 @@
     margin: 0;
     padding: 0;
     white-space: nowrap;
+    flex-direction: column;
 }
     .floor-list-container >li{
         cursor: pointer;
-        padding: 1rem;
+        padding: 0.5rem;
         height:100%;
     }
 
@@ -56,7 +61,23 @@
 
     .feedback-component h3{
         color: #AAD5D5;
-        text-align: center;
+        
+        text-align: left;
+
+    }
+
+    .badgeContainer{
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    .badgeWrapper {
+        position: relative;
+        
+    }
+    .thankyou{
+        padding: 1rem;
     }
 
     .spinner{
@@ -88,7 +109,7 @@
     }
 
     .contentRef1 .back-arrow img{
-        width:7%;
+        width:6%;
         cursor: pointer;
 
     
@@ -101,6 +122,10 @@
     }
     .svgContainer .back-arrow {
         width: 100%;
+    }
+
+    .svgContainer h1{
+        color: #fff;
     }
 
 
@@ -119,12 +144,45 @@
         z-index: 1000; 
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         background: rgba(0, 0, 0, 0.5); 
       }
+
+      .badge-container{
+        width: 50%;
+      }
       
-  
+      .badge .badgeImg{
+        width: 90%;
+        transition: opacity 0.3s ease;
+      }
+
+      .badge .badgeTag {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+        .badgeWrapper:hover .badgeImg {
+            opacity: 0.3;
+        }
+        
+        .badgeWrapper:hover .badgeTag {
+            opacity: 1;
+        }
+      
+      .badge{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
 
     
 
@@ -152,7 +210,7 @@
     .contentRef1 .feedback-component{
             /* background-color: #AAD5D5 ; */
             background-color: #191970;
-            padding: 0.5rem;
+            
             border-radius: 10px;
             display: flex;
             flex-direction: column;
@@ -164,7 +222,8 @@
 
     .feedback-component .question{
         width:100%;
-        padding: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem ;
     }
 
     .common-perception{
@@ -173,8 +232,50 @@
 
     .submitBtn{
         text-decoration: none;
-        color: #fff;
+        color: #191970;
+        margin-top: 10%;
+        width: 100%;
+        font-weight: 600;
+        text-align: center;
+        padding: 0.5rem;
+        background-color: #AAD5D5;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+
     }
+
+    .left-side{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left-side .legend{
+        width: 100%;
+        margin-left: 13%;
+        display: flex;
+        flex-direction: row;
+    }
+
+        .left-side .legend .legend-element{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 50%;
+            color: #0B1215;
+        }
+
+        .left-side .legend .colored-box{
+            width: 15px;
+            height: 15px;
+            margin-right: 2%;
+        }
+        .left-side .legend .tirquoise{
+            background-color: #AAD5D5;
+        }
+        .left-side .legend .blue{
+            background-color: #191970;
+        }
+
     
     .slider-wrapper{
         display: flex;
@@ -187,7 +288,7 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        max-width: 70%;
+        max-width: 50%;
         align-items: center;
         justify-content: center;
         padding-left: 2%;
@@ -219,7 +320,7 @@
 
     .svgFloating {
         animation: updown 3s ease infinite !important;
-        width:60%;
+        width:40%;
     }
 
     @keyframes updown{
@@ -253,7 +354,7 @@
         .floor-list li{
                 display: block;
                 padding: 0.5em 2em;
-                color: #444;
+                color: #191970;
                 font-size: .9em;
                 text-decoration: none;
                 
@@ -288,7 +389,7 @@
         }
 
         .contentRef1 .badge {
-            width: 40%;
+            width: 50%;
         }
 
         .custom-radio .radio-btns{
@@ -345,9 +446,14 @@
             background-color: #AAD5D5;
           }
 
+          .different-color{
+            color: #AAD5D5;
+          }
+
 
 
 
    
+
 
            

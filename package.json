@@ -11,8 +11,10 @@
     "postinstall": "npm run install-client && npm run install-server",
     "build-client": "npm run build --prefix client"
   },
- 
   "engines": {
     "node": "21.x"
+  },
+  "dependencies": {
+    "react-tour": "^0.0.2"
   }
 }

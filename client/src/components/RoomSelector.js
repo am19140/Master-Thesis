@@ -11,6 +11,14 @@ import {ReactComponent as Snowman} from '../images/snowman.svg'
 import '../styles/snowman.css'
 import CustomSlider from './CustomSlider';
 import RadioButtons from './RadioButtons';
+import happyPeople from '../images/celebration.png';
+import fire from '../images/fire.png';
+import snowman_cool from '../images/snowman_cool.png';
+import slightly_warm from '../images/slightly-warm.png';
+import slightly_cool from '../images/slightly-cool.png';
+import hot from '../images/hot.png';
+import cold from '../images/cold.png';
+import Joyride from 'react-joyride';
 
 
 function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,selectedRoomNumber, setFeedbackSubmitted, feedbackSubmitted }) {
@@ -25,17 +33,101 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const contentRef1 = useRef(null);
     const contentRef2 = useRef(null);
     const svgRef = useRef(null);
-    const [opacityRef1, setOpacityRef1] = useState(1);
+    const [opacityRef0, setOpacityRef0] = useState(1);
+
+    const [opacityRef1, setOpacityRef1] = useState(0);
     const [opacityRef2, setOpacityRef2] = useState(0);
     const load = useRef(null); 
+    const [userFeedback, setUserFeedback] = useState('');
+    const [runInitial, setRunInitial] = useState(true); // To control the initial walkthrough
+    const [runSecond, setRunSecond] = useState(false); // To control the contentRef1 walkthrough
+    
+ 
     
     const [roomFeedback, setRoomFeedback] = useState({
         perceptions: [],
         mostCommonPerceptions: [],  
         isControversial: false,
+        badgeContent:[],
         message: ""
     });
 
+    const perceptionImages = {
+        comfortable: happyPeople,
+        hot: hot,
+        cold: cold,
+        'slightly warm': slightly_warm,
+        warm: fire,
+        'slightly cool': slightly_cool,
+        cool: snowman_cool
+    };
+
+    
+    const initialSteps = [
+        {
+            target: '.trigger',
+            content: 'Click here to select a floor.',
+        },
+        {
+            target: '.buttonContainer',
+            content: 'Check the list for room numbers equipped with temperature sensors..',
+        },
+        {
+            target: '.btn-flip',
+            content: 'Click on a room to view its thermal conditions.',
+        },
+
+        {
+            target: '.left-side svg',
+            content: 'Or easily find the room on the map.',
+        }
+    ];
+
+    const secondSteps = [
+        {
+            target: '.feedback-component',
+            content: 'Give your feedback with 2 clicks.',
+        },
+        {
+            target: '.submitBtn',
+            content: 'Submit your feedback by clicking this button.',
+        }
+    ];
+
+    const joyrideStyles = {
+        options: {
+            arrowColor: '#AAD5D5',
+            backgroundColor: '#AAD5D5',
+            overlayColor: 'rgba(0, 0, 0, 0.5)',
+            primaryColor: '#73a2ff',
+            textColor: '#fff',
+            width: 300,
+            zIndex: 1000,
+        },
+        buttonClose: {
+            color: '#fff'
+        },
+        buttonNext: {
+            backgroundColor: '#6A6AD2'
+        },
+        buttonBack: {
+            marginRight: 10,
+            color: '#fff'
+        },
+        tooltip: {
+            borderRadius: '10px',
+            textAlign: 'left'
+        },
+        tooltipTitle: {
+            color: '#fff'
+        },
+        tooltipContent: {
+            padding: '20px'
+        },
+        tooltipFooter: {
+            textAlign: 'right'
+        }
+    };
     
 
     const zIndexRef1 = opacityRef1 === 1 ? 10 : 5;
@@ -63,7 +155,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         fetchRooms();
     }, [floor]);
 
-    
+   
 
     useEffect(() => {
         if (roomsRefs.current.length > 0) {
@@ -83,12 +175,14 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             
             if (selectedRoomId) {
                 setOpacityRef1(1);
+                setOpacityRef0(0);
                 setOpacityRef2(0); 
                 gsap.to(contentRef1.current, { x: 0, opacity: 1, duration: 1 });
                 gsap.to(contentRef2.current, { x: 0, opacity: 0, duration: 1 });
             } else {
-                setOpacityRef1(0.5);
-                setOpacityRef2(1); 
+                setOpacityRef1(0);
+                setOpacityRef2(1);
+                setOpacityRef0(0);
                 gsap.to(contentRef1.current, { x: -50, opacity: 0, duration: 1 });
                 gsap.to(contentRef2.current, { x: 0, opacity: 1, duration: 1 });
             }
@@ -141,6 +235,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             floor: floor,
             room: selectedRoomId
         };
+        setUserFeedback(radioValue);
 
         const payload_json = JSON.stringify(payload);
         console.log(payload_json);
@@ -156,6 +251,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             if (response.ok) {
                 console.log('Feedback submitted successfully:', data);
                 setFeedbackSubmitted(true);
+                setRunSecond(false);
                 setisSnowmanVisible(true); 
             } else {
                 throw new Error(data.message); 
@@ -192,18 +288,65 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                         perceptions: data.commonPerceptions,
                         isControversial: data.isControversial,
                         message: data.message,
+                        badgeContent: data.badgeContent,
                         userAgrees: data.userAgrees
                     });
                 })
                 .catch(error => console.error('Error fetching room feedback:', error));
         }
     }, [selectedRoomId]);
-   
+
+    useEffect(() => {
+        if (opacityRef1 === 1) {
+            setRunSecond(true);
+            setRunInitial(false);
+        }
+    }, [opacityRef1]);
+
+    
+    
+    
+    const handleInitialJoyrideCallback = (data) => {
+        const { status } = data;
+        const finishedStatuses = ['finished', 'skipped'];
+        if (finishedStatuses.includes(status)) {
+            setRunInitial(false);
+            if (opacityRef1 === 1) {
+                setRunSecond(true);
+            }
+        }
+    };
+
+    const text1 = 'You are comfortable in every room you walk in'
+    const text2 = 'You are the first to say Im cold'
+    const text3 = 'You are the first to say Im hot'
+    const split1 = text1.split("");
+    const split2 = text2.split("");
+    const split3 = text3.split("");
+
+
     
 
     return (
         <div className='selectorContainer'>
-  
+         <Joyride
+                steps={initialSteps}
+                run={runInitial}
+                continuous={true}
+                showSkipButton={true}
+                showProgress={true}
+                styles={joyrideStyles}
+                callback={handleInitialJoyrideCallback}
+            />
+
+            <Joyride
+                steps={secondSteps}
+                run={runSecond}
+                continuous={true}
+                showSkipButton={true}
+                showProgress={true}
+                styles={joyrideStyles}
+            />
         {error && <p>{error}</p>}
         {isSnowmanVisible && 
 
@@ -212,7 +355,14 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 <div onClick={handleCloseAvatar} className='back-arrow' >                            
                     <CloseCircleOutlined className='circleClose'/>
                 </div>
-                <Snowman  ref={svgRef}  className='svgFloating'/>
+                {userFeedback === 'comfortable' && <img src={happyPeople} alt="Happy People" ref={svgRef} className='svgFloating'/>}
+                {userFeedback === 'cold' && <img src={snowman_cool} alt="Snowman" ref={svgRef} className='svgFloating'/>}
+                {userFeedback === 'hot' && <img src={fire} alt="Fire Person" ref={svgRef} className='svgFloating'/>}
+                <h1>This is your personality badge!</h1>
+                {userFeedback === 'comfortable' && <h3>You are comfortable in every room you walk in. Celebrate it!</h3>}
+                {userFeedback === 'cold' && <h3>You are the first to say 'I'm cold'</h3>}
+                {userFeedback === 'hot' && <h3>You are the first to say 'I'm hot'</h3>}
+
             </div>
         }
         
@@ -236,7 +386,17 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
                         </div>
                         <div className='badge'>
-                            <Snowman />
+                            {roomFeedback.badgeContent.map((perception, index) => (
+                                <div className="badgeWrapper" key={index}>
+                                    <img 
+                                        src={perceptionImages[perception]} 
+                                        alt={perception} 
+                                        className='badgeImg' 
+                                    />
+                                    <span className='badgeTag'>{perception}</span>
+                                </div>
+                            ))}
+                            
                         </div>
                     </div>
                 </>
@@ -246,19 +406,24 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
             <div className='feedback-component'>
                 {feedbackSubmitted ? (
-                    <div>
+                    <div className='thankyou'>
                         <h3>Thank you for being awesome!</h3>
                         <p>We are now one step closer to improving LAB42!</p>
+                        <p>Enjoy the rest of your studying session.</p>
+
+
+
                     </div>
                 ) : (
                     <>
-                        <h3>Do you have any complaints about your room?</h3>
-                        <div className='question first'>
-                            <RadioButtons value={radioValue} onChange={handleRadioChange}/>
-                        </div>
+                        <h3>Do you have any complaints about the temperature of <span className='different-color'>Room {selectedRoomNumber}</span>?</h3>
                         <div className='question second'>
                             <CustomSlider value={sliderValue} onChange={handleSliderChange} className='custom-slider' min={0} max={6} />
                         </div>
+                        <div className='question first'>
+                            <RadioButtons value={radioValue} onChange={handleRadioChange}/>
+                        </div>
+                        
                         <a onClick={handleSubmitClick} href='#' className='submitBtn'>Submit</a>
                     </>
                 )}
@@ -286,7 +451,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                     </ul>
                     </li>
                     <li>
-                    {floor === 0 ? 'Ground Floor' : `${floor}${floor === 1 ? 'st' : (floor === 2 ? 'nd' : (floor === 3 ? 'rd' : 'th' ))} Floor`}
+                    {floor === 0 ? 'You are now on the Ground Floor' : `You are now on the ${floor}${floor === 1 ? 'st' : (floor === 2 ? 'nd' : (floor === 3 ? 'rd' : 'th' ))} Floor`}
                     </li>
                 </ul>
                 <div className='buttonContainer'>

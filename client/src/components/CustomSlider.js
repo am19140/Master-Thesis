@@ -21,7 +21,7 @@ const CustomSlider = ({value, onChange}) => {
 
   return (
     <>
-    <h4>Right now, how are you feeling about this room?</h4>
+    <h4>Right now, how are you feeling about the room's temperature?</h4>
       <div className='slider-wrapper'>
         
         <img src={snowflakeGif}></img>

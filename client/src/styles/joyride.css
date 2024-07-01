@@ -1,0 +1,39 @@
+/* joyrideStyles.css */
+
+.joyride-overlay {
+    background-color: rgba(79, 26, 0, 0.4);
+  }
+  
+  .joyride-tooltip {
+    background-color: #e3ffeb;
+    border-radius: 10px;
+    text-align: left;
+    color: #004a14;
+  }
+  
+  .joyride-tooltip-title {
+    color: #004a14;
+  }
+  
+  .joyride-tooltip-content {
+    padding: 20px;
+  }
+  
+  .joyride-tooltip-footer {
+    text-align: right;
+  }
+  
+  .joyride-button-close {
+    color: #004a14;
+  }
+  
+  .joyride-button-next {
+    background-color: #004a14;
+    color: #fff;
+  }
+  
+  .joyride-button-back {
+    margin-right: 10px;
+    color: #004a14;
+  }
+  
