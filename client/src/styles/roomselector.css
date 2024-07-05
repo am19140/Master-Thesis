@@ -80,6 +80,10 @@
         padding: 1rem;
     }
 
+    .first-h3{
+        padding: 1rem;
+    }
+
     .spinner{
         width: 100%;
         display: flex;
@@ -102,6 +106,49 @@
         width: 30%;
     }
 
+    .contentRef0{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .contentRef0 button{
+        text-decoration: none;
+        color: #fff;
+        
+        width: 100%;
+        font-weight: 600;
+        text-align: center;
+        padding: 0.5rem;
+        background-color: transparent;
+        border: none;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+        .scen2-btn{
+            animation: updown1 2s ease infinite !important;
+        }
+
+        .scen1-btn{
+            animation: updown2 2.2s ease infinite !important;
+        }
+
+        .contentRef0 p{
+            font-size: 20px;
+        }
+
+    .contentRef0 button:hover{
+        cursor: pointer;
+        color:#191970;
+    }
+
     .contentRef1{
         width: 100%;
         display: flex;
@@ -111,8 +158,11 @@
     .contentRef1 .back-arrow img{
         width:6%;
         cursor: pointer;
+    }
 
-    
+    .contentRef2 .back-arrow img{
+        width:6%;
+        cursor: pointer;
     }
 
     .contentRef1 .back-arrow{
@@ -326,6 +376,18 @@
     @keyframes updown{
         10% {
             transform: translateY(10%);
+        }
+    }
+
+    @keyframes updown1{
+        20% {
+            transform: translateY(20%);
+        }
+    }
+
+    @keyframes updown2{
+        20% {
+            transform: translateY(23%);
         }
     }
 

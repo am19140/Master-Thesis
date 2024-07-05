@@ -6,6 +6,6 @@ import { submitFeedback, getAveragePerception } from '../controllers/feedbackCon
 router.get('/selection', getRoomsPerFloor);
 router.get('/room_temp/:roomId',getRoomTemp);
 router.post('/submission',submitFeedback);
-router.get('/feedback/:roomId', getAveragePerception);
+router.get('/feedback/:roomId/:userfeedback', getAveragePerception);
 
 export default router;

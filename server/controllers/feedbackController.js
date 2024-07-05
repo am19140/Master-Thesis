@@ -2,19 +2,20 @@ import Feedback from '../models/Feedback.js';
 
 export const submitFeedback = async (req, res) => {
     console.log(req.body);
-    const temperaturePreference = req.body.usual_behaviour;
+    // const temperaturePreference = req.body.usual_behaviour;
     const perception  = req.body.perception;
     const floor = req.body.floor;
     const room = req.body.room;
-    console.log("Temp",temperaturePreference);
+    // console.log("Temp",temperaturePreference);
     console.log("Perception", perception);
     const now = new Date();
-    const timestamp = now.toISOString();
+    const timestamp = now.toLocaleString();
+    console.log(timestamp);
 
     try {
         
         const newFeedback = await Feedback.create({
-            temperaturePreference,
+            // temperaturePreference,
             perception,
             floor,
             room,
@@ -37,23 +38,24 @@ export const submitFeedback = async (req, res) => {
 
 export const getAveragePerception = async (req, res) => {
     const roomId = req.params.roomId;
+    const userLastFeedback = req.params.userfeedback;
     console.log('----------------------', roomId);
     try {
         const feedbackList = await Feedback.findAll({
             where: { room: roomId },
-            attributes: ['perception','temperaturePreference']
+            attributes: ['perception']
         });
 
         console.log('the data i get:',feedbackList);
 
-        const userLastFeedback = await Feedback.findOne({
-            where: { room: roomId },
-            order: [['timestamp', 'DESC']]
-        });
+        // const userLastFeedback = await Feedback.findOne({
+        //     where: { room: roomId },
+        //     order: [['timestamp', 'DESC']]
+        // });
 
         console.log('last feedback',userLastFeedback);
 
-        if (feedbackList.length > 0) {
+        if (userLastFeedback && feedbackList) {
             
             const perceptionCounts = {};
             feedbackList.forEach(fb => {
@@ -78,8 +80,8 @@ export const getAveragePerception = async (req, res) => {
             });
 
                        
-
-            
+            console.log('Im hereee',mostCommonPerceptions);
+                      
 
             const isControversial = mostCommonPerceptions.length == 2;
             const isTooControversial = mostCommonPerceptions.length > 2;
@@ -95,25 +97,31 @@ export const getAveragePerception = async (req, res) => {
             };
 
            
-            
+            const agrees = mostCommonPerceptions.includes(userLastFeedback.toString());
             const commonPerceptionNames = mostCommonPerceptions.map(perception => perceptionTags[perception]);
-            const userPerceptionName = userLastFeedback ? perceptionTags[userLastFeedback.perception] : null;
-            const userAgrees = userLastFeedback && mostCommonPerceptions.includes(userLastFeedback.perception.toString());
+            const userPerceptionName = userLastFeedback ? perceptionTags[userLastFeedback] : null;
+            const userAgrees = userLastFeedback && mostCommonPerceptions.includes(userLastFeedback.toString());
             console.log(commonPerceptionNames);
 
             let message = '';
+            let message1=''
             let badge=[];
             if (isTooControversial) {
                 console.log('Too controversial');                
                 message = "This room is too controversial to determine a clear majority perception.";
+                message1 = "This room is too controversial to determine a clear majority perception.";
             } else if (isControversial) {
                 console.log('controversial');
                 // wrong result if there are a lot of feedback cause it finds the largest but says controversial
                 message = `Controversial room. Equally voted it as ${commonPerceptionNames.join(' and ')}.`;
+                message1 = `Controversial room. Equally voted it as ${commonPerceptionNames.join(' and ')}.`;
+                
                 badge.push(commonPerceptionNames[0],commonPerceptionNames[1]);
             } else {
                 console.log('User agrees');
                 badge.push(commonPerceptionNames[0],commonPerceptionNames[1]);
+                message1 = `Most students, perceive this room as ${commonPerceptionNames.join(' and some as ')}.`;
+
                 message = userAgrees ? 
                 // smth wrong?
                     `Most students, including you, perceive this room as ${commonPerceptionNames.join(' and some as ')}.` : 
@@ -127,7 +135,9 @@ export const getAveragePerception = async (req, res) => {
                 userAgrees: userAgrees,
                 badgeContent: badge,
                 isControversial: isControversial,
-                message: message});
+                message: message,
+                message1:message1
+            });
         } else {
             res.status(404).json({ message: "You are the first to submit feedback for this room." });
         }

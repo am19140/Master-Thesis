@@ -2,13 +2,13 @@ import { Model, DataTypes } from 'sequelize'; // treated as an ES module !
 import database from '../config/database.js'; 
 
 const Feedback = database.define('feedback', {
-  temperaturePreference: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      isIn: [['cold', 'comfortable', 'hot']] 
-    }
-  },
+  // temperaturePreference: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  //   validate: {
+  //     isIn: [['cold', 'comfortable', 'hot']] 
+  //   }
+  // },
   perception: {
     type: DataTypes.INTEGER,
     allowNull: false,

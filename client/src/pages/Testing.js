@@ -17,6 +17,8 @@ function Testing() {
     const [selectedRoomNumber, setSelectedRoomNumber] = useState(null); 
     const [cacheKey, setCacheKey] = useState(null); 
     const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+    const [roomClicked, setRoomClicked] = useState(false);
+
 
     useEffect(() => {
         if (loading && selectedRoomId) {
@@ -49,7 +51,7 @@ function Testing() {
     const handleRoomClick =  async (roomNumber, roomId) => {
         
       console.log(`Clicked on room with ID: ${roomId} and Number: ${roomNumber}`);
-      setSelectedRoomNumber(roomNumber);
+      
       setFeedbackSubmitted(false);
       setCacheKey(`room_temp_${roomId}`);
 
@@ -64,7 +66,10 @@ function Testing() {
                 room_number = roomNumber.split("-")[1];
             }
         }
-     
+
+        setSelectedRoomNumber(room_number);
+        setRoomClicked(prev => !prev);
+
         const cachedData = localStorage.getItem(cacheKey);
         console.log(localStorage);
 
