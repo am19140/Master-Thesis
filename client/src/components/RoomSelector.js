@@ -155,9 +155,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
         const fetchRooms = async () => {
            
-            try {
-                
-                
+            try {              
                 const response = await fetch(`/api/selection?floor=${floor}`);
                 if (!response.ok) throw new Error('Failed to fetch rooms');
                 const data = await response.json();
@@ -352,10 +350,14 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     };
 
     useEffect(() => {
-        if (selectedRoomId) {
+        console.log('useEffect triggered with selectedRoomId:', selectedRoomId, 'and userFeedback:', userFeedback);
+    
+        if (selectedRoomId && userFeedback !== '') {
+            console.log('Fetching feedback for selectedRoomId:', selectedRoomId, 'and userFeedback:', userFeedback);
             fetch(`/api/feedback/${selectedRoomId}/${userFeedback}`)
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Feedback data received:', data);
                     setRoomFeedback({
                         perceptions: data.commonPerceptions,
                         isControversial: data.isControversial,
@@ -366,8 +368,28 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                     });
                 })
                 .catch(error => console.error('Error fetching room feedback:', error));
+        } else if (selectedRoomId && userFeedback === '') {
+            console.log('Fetching feedback for selectedRoomId:', selectedRoomId, 'with userFeedback as null');
+            // Adjust the endpoint or the logic if userFeedback is null
+            fetch(`/api/feedback/${selectedRoomId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Feedback data received:', data);
+                    setRoomFeedback({
+                        perceptions: data.commonPerceptions,
+                        isControversial: data.isControversial,
+                        message: data.message,
+                        message1: data.message1,
+                        badgeContent: data.badgeContent,
+                        userAgrees: data.userAgrees
+                    });
+                })
+                .catch(error => console.error('Error fetching room feedback:', error));
+        } else {
+            console.log('No selectedRoomId');
         }
-    }, [selectedRoomId,userFeedback]);
+    }, [selectedRoomId, userFeedback]);
+    
 
     useEffect(() => {
         console.log('Opacity Ref0:', opacityRef0);
@@ -408,7 +430,15 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             }
         }
     };
+
+    useEffect(() => {
+        console.log('SelectedRoomId changed:', selectedRoomId);
+    }, [selectedRoomId]);
     
+    useEffect(() => {
+        console.log('---------------SelectedRoomId:', selectedRoomId);
+        console.log('UserFeedback:', userFeedback);
+    }, [selectedRoomId, userFeedback]);
 
 
     const handleScenario1 = () => {
@@ -420,6 +450,8 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         
         
     };
+
+
 
     const handleScenario2 = () => {
         setScenario2(true);
