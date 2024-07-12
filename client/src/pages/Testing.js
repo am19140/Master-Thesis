@@ -22,7 +22,6 @@ function Testing() {
 
     useEffect(() => {
         if (loading && selectedRoomId) {
-          console.log('This is the room id?: ',selectedRoomId);
           const eventSource = new EventSource(`/api/room_temp/${selectedRoomId}`);
     
           eventSource.onmessage = (event) => {
@@ -36,7 +35,6 @@ function Testing() {
           };
     
           eventSource.onerror = (err) => {
-            console.error('Error with SSE', err);
             setLoading(false);
             eventSource.close();
           };
@@ -50,13 +48,11 @@ function Testing() {
 
     const handleRoomClick =  async (roomNumber, roomId) => {
         
-      console.log(`Clicked on room with ID: ${roomId} and Number: ${roomNumber}`);
       
       setFeedbackSubmitted(false);
       setCacheKey(`room_temp_${roomId}`);
 
         if (typeof roomNumber !== 'string') {
-            console.error('Invalid roomNumber:', roomNumber);
             return;
         }
        
@@ -71,7 +67,6 @@ function Testing() {
         setRoomClicked(prev => !prev);
 
         const cachedData = localStorage.getItem(cacheKey);
-        console.log(localStorage);
 
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
@@ -80,7 +75,6 @@ function Testing() {
             // Assume data is valid for 10 minutes
             if (new Date(parsedData.timestamp).getTime() + 600000 > now.getTime()) {
                 setTemperature(parsedData.temperature);
-                console.log('-----------cached id ---------',roomId);
                 setSelectedRoomId(roomId);
                 return;
             }
@@ -96,7 +90,6 @@ function Testing() {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 setTemperature(data);
                 localStorage.setItem(cacheKey, JSON.stringify({
                     temperature: data,

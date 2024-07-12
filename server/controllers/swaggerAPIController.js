@@ -3,8 +3,9 @@ import {getToken, fetchDatawithToken} from '../services/httpClient.js';
 
 const getRooms = async (req, res) => {
   
-  const username = 'mariana';
-  const password = '532xr]~MpYg|';
+  const username = process.env.USERNAME;
+  console.log('hello',username);
+  const password = process.env.PASSWORD;
   const roomsUrl = 'http://leffe.science.uva.nl:8042/rooms/';
   const url = 'http://leffe.science.uva.nl:8042/auth/login';
   

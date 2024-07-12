@@ -159,11 +159,9 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 const response = await fetch(`/api/selection?floor=${floor}`);
                 if (!response.ok) throw new Error('Failed to fetch rooms');
                 const data = await response.json();
-                console.log(data);
                 setRooms(data);
                 
             } catch (error) {
-                console.error('Fetch error:', error);
                 setError(error.message);
             }
             
@@ -182,7 +180,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
     useEffect(() => {
         if (svgRef.current) {
-            console.log('svg exists');
             gsap.set(svgRef.current, { opacity: 0 });
         }
     }, []);
@@ -195,7 +192,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             gsap.to(contentRef0.current, { x: 300, opacity: 0, duration: 1 });
         } else {
             if (scenario2 && selectedRoomId) {
-                console.log('scenario2');                
                 setOpacityRef0(0);
                 setOpacityRef1(1); 
                 setOpacityRef2(0);
@@ -206,7 +202,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 gsap.to(contentRef2.current, { x: 300, opacity: 0, duration: 1 });
                 
             } else if (scenario1 && selectedRoomId) {
-                console.log('scenario1');
                 setOpacityRef0(0);
                 setOpacityRef1(1);
                 setOpacityRef2(0);
@@ -232,7 +227,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             
             else {
                 // Default case when no scenario is true
-                console.log('default');
                 setOpacityRef0(1);
                 setOpacityRef1(0);
                 setOpacityRef2(0);
@@ -258,20 +252,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             gsap.to(contentRef2.current, { x:0,opacity: 1, duration: 1 });
         }
     }, [scenario1]);
-    
-
-
-
-    // useEffect(()=>{
-    //     if(loading){
-    //         console.log('loading');
-    //         gsap.to(load.current, {x:0, opacity:1 ,duration:1});
-    //         gsap.to(contentRef1.current, { x: 300, opacity: 0, duration: 1 });
-    //         gsap.to(contentRef2.current, { x: 300, opacity: 0, duration: 1 });
-    //     }
-        
-    // })
-
   
 
     useEffect(() => {
@@ -294,13 +274,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     }
 
     const handleSubmitClick = async (event) => {
-
-        //event.stopPropagation();
-        
         event.preventDefault();
-        
-        console.log("Slider value: ",sliderValue);
-        console.log("ID: ",selectedRoomId);
         const payload = {
             perception: sliderValue,            
             floor: floor,
@@ -308,9 +282,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         };
         setUserFeedback(sliderValue);
 
-
-        const payload_json = JSON.stringify(payload);
-        console.log(payload_json);
         try{
             const response = await fetch(`/api/submission`, {
                 method: 'POST', 
@@ -321,7 +292,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             });
             const data = await response.json();
             if (response.ok) {
-                console.log('Feedback submitted successfully:', data);
                 setFeedbackSubmitted(true);
                 setRunSecond(false);
                 setisSnowmanVisible(true); 
@@ -332,7 +302,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
 
         }
         catch (error) {
-            console.error('Error submitting feedback:', error.message);
         }
     };
 
@@ -350,14 +319,11 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     };
 
     useEffect(() => {
-        console.log('useEffect triggered with selectedRoomId:', selectedRoomId, 'and userFeedback:', userFeedback);
     
         if (selectedRoomId && userFeedback !== '') {
-            console.log('Fetching feedback for selectedRoomId:', selectedRoomId, 'and userFeedback:', userFeedback);
             fetch(`/api/feedback/${selectedRoomId}/${userFeedback}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Feedback data received:', data);
                     setRoomFeedback({
                         perceptions: data.commonPerceptions,
                         isControversial: data.isControversial,
@@ -369,12 +335,10 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 })
                 .catch(error => console.error('Error fetching room feedback:', error));
         } else if (selectedRoomId && userFeedback === '') {
-            console.log('Fetching feedback for selectedRoomId:', selectedRoomId, 'with userFeedback as null');
             // Adjust the endpoint or the logic if userFeedback is null
             fetch(`/api/feedback/${selectedRoomId}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Feedback data received:', data);
                     setRoomFeedback({
                         perceptions: data.commonPerceptions,
                         isControversial: data.isControversial,
@@ -386,26 +350,18 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 })
                 .catch(error => console.error('Error fetching room feedback:', error));
         } else {
-            console.log('No selectedRoomId');
         }
     }, [selectedRoomId, userFeedback]);
     
 
-    useEffect(() => {
-        console.log('Opacity Ref0:', opacityRef0);
-        console.log('Opacity Ref1:', opacityRef1);
-        console.log('Opacity Ref2:', opacityRef2);
-    
+    useEffect(() => {    
         if (opacityRef1 === 1) {
-            console.log('Running second Joyride');
             setRunInitial(false);
             setRunSecond(true);
         } else if (opacityRef2 === 1) {
-            console.log('Running initial Joyride');
             setRunInitial(true);
             setRunSecond(false);
         } else {
-            console.log('Stopping all Joyrides');
             setRunInitial(false);
             setRunSecond(false);
         }
@@ -432,12 +388,9 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     };
 
     useEffect(() => {
-        console.log('SelectedRoomId changed:', selectedRoomId);
     }, [selectedRoomId]);
     
     useEffect(() => {
-        console.log('---------------SelectedRoomId:', selectedRoomId);
-        console.log('UserFeedback:', userFeedback);
     }, [selectedRoomId, userFeedback]);
 
 
@@ -457,16 +410,10 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         setScenario2(true);
         setScenario1(false);
         setRunInitial(true);
-        console.log('scenario2 should be true', scenario2);
 
         gsap.to(contentRef0.current, { x: 200, opacity: 0, duration: 1 });
          // Move contentRef1 out of view
     };
-
-    useEffect(() => {
-        console.log('scenario2 has been updated:', scenario2);
-        console.log('scenario1 has been updated:', scenario1);
-    }, [scenario2, scenario1]);
     
 
     const resetScenario = () => {
@@ -475,7 +422,6 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
         setOpacityRef0(1);
         setOpacityRef1(0);
         setOpacityRef2(0);
-        console.log('reset');
         setRunInitial(false);
         setRunSecond(false);
         gsap.to(contentRef0.current, { x: 0, opacity: 1, duration: 1 });

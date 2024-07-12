@@ -1,9 +1,8 @@
 import {getToken, fetchDatawithToken} from '../services/httpClient.js';
 
 export const getRoomsPerFloor = async (req, res) => {
-  console.log('getroomsperfloor');
-  const username = 'mariana';
-  const password = '532xr]~MpYg|';
+  const username = process.env.USRNAME;
+  const password = process.env.PASSWORD;
   const floor = req.query.floor;
   const roomsUrl = `http://leffe.science.uva.nl:8042/rooms?floor=${floor}`;
   const url = 'http://leffe.science.uva.nl:8042/auth/login';
@@ -20,23 +19,15 @@ export const getRoomsPerFloor = async (req, res) => {
 };
 
 export const getRoomTemp = async (req, res) => {
-  const username = 'mariana';
-  const password = '532xr]~MpYg|';
+  const username = process.env.USRNAME;
+  const password = process.env.PASSWORD;
   const roomId = req.params.roomId;
-  console.log(req.params);
-  console.log("Room id: ",roomId);
   const now = new Date();
   const endTime = now.toISOString();  
   const threeHoursAgo = new Date(now.getTime() - (4 * 60 * 60 * 1000)).toISOString(); // 3 hours ago in ISO 8601
-  console.log(threeHoursAgo);
-  console.log(endTime);
   const getpeginationUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}`;
-  //const roomsUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${threeHoursAgo}&endTime=${endTime}`
   const url = 'http://leffe.science.uva.nl:8042/auth/login';
 
-
-
-  
 try {
     const token = await getToken(url, username, password);
     if (!token) {
@@ -48,7 +39,6 @@ try {
     
 
     if (!getPages || getPages.results.length === 0) {
-      console.log('No data available for the given room.');
       res.status(404).json({message: "No data available"});
       return;
     }
@@ -58,16 +48,13 @@ try {
     for (let page = totalPages; page>0; page--){
       const roomDataUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}&page=${totalPages}`;
       const roomData = await fetchDatawithToken(roomDataUrl, token);
-      //console.log(roomData);
       const temperatureData = roomData.results.reverse().find(entry => entry.temperature !== undefined);
       if (temperatureData) {
-        //console.log('Latest temperature data:', temperatureData);
         return res.json(Math.round(temperatureData.temperature));
       }
       else {
         const roomDataUrl = `http://leffe.science.uva.nl:8042/rooms/${roomId}/data?startTime=${encodeURIComponent(threeHoursAgo)}&endTime=${encodeURIComponent(endTime)}&page=${totalPages-1}`;
         const roomData = await fetchDatawithToken(roomDataUrl, token);
-        //console.log(roomData);
         const temperatureData = roomData.results.reverse().find(entry => entry.temperature !== undefined);
         return res.json(Math.round(temperatureData.temperature));
       }
@@ -76,7 +63,6 @@ try {
     
 
 } catch (error) {
-  console.error('Failed to fetch room temperature data:', error);
   res.status(500).send('Failed to fetch rooms from external API');
 }
 

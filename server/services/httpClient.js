@@ -19,7 +19,6 @@ const getToken = async (url, username,password) => {
           },
           body: JSON.stringify({ username, password })
         };
-    
         const response = await fetch(url, options);
         if (!response.ok) {
           throw new Error(`HTTP error during login! Status: ${response.status}`);
