@@ -18,7 +18,9 @@ function Testing() {
     const [cacheKey, setCacheKey] = useState(null); 
     const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
     const [roomClicked, setRoomClicked] = useState(false);
-
+    const [scenario1, setScenario1] = useState(false);
+    const [scenario2, setScenario2] = useState(false); 
+    const interactive = scenario1 || scenario2;
 
     useEffect(() => {
         if (loading && selectedRoomId) {
@@ -44,6 +46,11 @@ function Testing() {
           };
         }
       }, [loading, selectedRoomId]);
+
+      useEffect(() => {
+        if (!scenario1 && !scenario2) {
+        }
+      }, [scenario1,scenario2]);
 
 
     const handleRoomClick =  async (roomNumber, roomId) => {
@@ -110,6 +117,8 @@ function Testing() {
         setSelectedRoomId(null);
     };
 
+
+    
     
 
     return (
@@ -120,7 +129,11 @@ function Testing() {
             <Grid container spacing={3}  className='gridBig'>
                 <Grid item xs={12} sm={8} >
                     <div className='left-side'>
-                      <FloorPlan onRoomClick={(e) => handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} floor={floor}/>
+                      <FloorPlan onRoomClick={(e) => 
+                        handleRoomClick(e.target.getAttribute('data-no'), e.target.id)} 
+                        floor={floor}
+                        interactive ={interactive}
+                        />
                         <div className='legend'>
                           <div className='legend-element'>
                             <div className='colored-box tirquoise'></div>
@@ -148,6 +161,10 @@ function Testing() {
                             selectedRoomNumber = {selectedRoomNumber}
                             setFeedbackSubmitted={setFeedbackSubmitted}
                             feedbackSubmitted={feedbackSubmitted}
+                            scenario1={scenario1}
+                            setScenario1={setScenario1}
+                            scenario2={scenario2}
+                            setScenario2={setScenario2}
                             />                
                     </div>                
                 </Grid>

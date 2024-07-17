@@ -7,12 +7,13 @@ import gsap from 'gsap';
 
 
 
-function FloorPlan({onRoomClick, floor}){
+function FloorPlan({onRoomClick, floor, interactive }){
 
   console.log('Selected:',floor);
  
   const floorRef = useRef();  
   const floorPlans = [<FloorPlan0 />, <FloorPlan1 />];
+
   useEffect(() => {
     // Trigger a fade-out/fade-in animation on floor change
     if (floorRef.current) {
@@ -31,9 +32,16 @@ function FloorPlan({onRoomClick, floor}){
     }
   }, [floor]); 
 
+  const handleClick = (e) => {
+    if (interactive) {
+      onRoomClick(e);
+    }
+  };
+
+
     
       return (
-        <div ref={floorRef} onClick={onRoomClick} style={{ width: '100%', height: 'auto' }}>
+        <div ref={floorRef} onClick={handleClick} style={{ width: '100%', height: 'auto' }}>
           {floorPlans[floor]}
         </div>
        

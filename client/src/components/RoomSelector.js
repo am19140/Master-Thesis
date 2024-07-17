@@ -22,7 +22,8 @@ import Joyride from 'react-joyride';
 import controversial from '../images/controversial.png'
 
 
-function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor, setFloor,selectedRoomNumber, setFeedbackSubmitted, feedbackSubmitted }) {
+function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, temperature, loading, floor,
+     setFloor,selectedRoomNumber, setFeedbackSubmitted, feedbackSubmitted, scenario1, setScenario1, scenario2, setScenario2 }) {
 
     const [error, setError] = useState(null);
     const [rooms, setRooms] = useState([]);
@@ -42,8 +43,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
     const [userFeedback, setUserFeedback] = useState('');
     const [runInitial, setRunInitial] = useState(true); // To control the initial walkthrough
     const [runSecond, setRunSecond] = useState(false); // To control the contentRef1 walkthrough
-    const [scenario1, setScenario1] = useState(false);
-    const [scenario2, setScenario2] = useState(false); 
+
     const [zIndexRef0, setZIndexRef0] = useState(10);
     const [zIndexRef1, setZIndexRef1] = useState(5);
     const [zIndexRef2, setZIndexRef2] = useState(5);
@@ -107,7 +107,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
             overlayColor: 'rgba(0, 0, 0, 0.5)',
             primaryColor: '#FB5821',
             textColor: '#fff',
-            width: 300,
+            width: 500,
             zIndex: 1000,
         },
         buttonClose: {
@@ -483,7 +483,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                 <h1>This is your personality badge!</h1>
                 {userFeedback === 0 && <h3>You are comfortable in every room you walk in. Celebrate it!</h3>}
                 {userFeedback === -3 && <h3>You are type to say 'I'm cold' when entering a room. Right?</h3>}
-                {userFeedback === 3 && <h3>You are type to say 'I'm cold' when entering a room. Right?</h3>}
+                {userFeedback === 3 && <h3>You are type to say 'I'm hot' when entering a room. Right?</h3>}
                 {userFeedback === 1 && <h3>You are the type to say 'I'm hot' every now an then. Don't feel bad!</h3>}
                 {userFeedback === -1 && <h3>You are the type to say 'I'm cold' every now an then. Don't feel bad!</h3>}
                 {userFeedback === -2 && <h3>You are the type that everyone expects to say <i>I'm cold</i>.</h3>}
@@ -638,9 +638,7 @@ function SpaceSelector({ selectedRoomId, resetSelectedRoom, handleRoomClick, tem
                     {rooms.map((room, index) => (                        
                         <div className='btn' key ={room.id}>
                             <a ref={el => roomsRefs.current[index] = el} 
-                            className='btn-flip' 
-                            
-                           
+                            className='btn-flip'                            
                             onClick={(e)=>  
                                     {e.preventDefault();    
                                     handleRoomClick(room.number, room.id)}

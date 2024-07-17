@@ -3,6 +3,11 @@
 .joyride-overlay {
     background-color: rgba(79, 26, 0, 0.4);
   }
+
+  .react-joyride__beacon{
+    width: 45px !important;
+    height: 45px !important;
+  }
   
   .joyride-tooltip {
     background-color: #e3ffeb;
